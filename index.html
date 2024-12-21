@@ -175,7 +175,7 @@
 
 <header>
     <div class="logo">
-        <img src="https://via.placeholder.com/150x50/0277bd/ffffff?text=Inversiones YegniMaik" alt="Inversiones YegniMaik Logo">
+        <img src="https://via.placeholder.com/150x50/0277bd/ffffff?text=Inversiones+YegniMaik" alt="Inversiones YegniMaik Logo">
     </div>
     <div class="currency-selector">
         <label for="currency">Moneda: </label>
@@ -266,6 +266,13 @@ let inventory = {
     'Aceite Corcordia Cuarto Litro': 100
 };
 
+// Registro de ventas del día
+let dailySales = {
+    'Aceite Corcovado 900 ml': 0,
+    'Aceite Corcordia Medio Litro': 0,
+    'Aceite Corcordia Cuarto Litro': 0
+};
+
 // Inicializar el carrito
 let cart = [];
 
@@ -273,6 +280,7 @@ let cart = [];
 function addToCart(productName, priceUSD, priceVES, productId) {
     if (inventory[productName] > 0) {
         inventory[productName]--; // Disminuir el stock del producto
+        dailySales[productName]++; // Incrementar la venta del producto en el día
         cart.push({ productName, priceUSD, priceVES });
         updateStockDisplay(productId); // Actualizar el stock en la página
         updateCartTotal(); // Actualizar el total del carrito
@@ -329,8 +337,10 @@ function removeFromCart(productName) {
     displayCart(); // Mostrar el carrito actualizado
 }
 
-// Mostrar carrito cuando la página se cargue
-document.addEventListener('DOMContentLoaded', displayCart);
+// Llamar la función displayCart al cargar la página
+window.onload = function() {
+    displayCart();
+};
 </script>
 
 </body>
