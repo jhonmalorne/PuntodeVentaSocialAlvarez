@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inversiones YegniMaik - Tienda Online</title>
+    <title>Yenny.Store - Tienda Online</title>
     <style>
         /* Resetting default styles */
         * {
@@ -195,48 +195,35 @@
 </header>
 
 <main>
-    <!-- Sección de Bienvenida -->
     <section id="home" class="banner">
-        <h1>Bienvenido a Inversiones YegniMaik</h1>
+        <h1>Bienvenido a Yenny.Store</h1>
         <p>¡La mejor tienda online con los productos más exclusivos!</p>
     </section>
 
-    <!-- Sección de Productos -->
     <section id="products" class="products">
         <h2>Productos Destacados</h2>
-        <div class="product">
-            <img src="https://via.placeholder.com/200x200?text=Producto+1" alt="Producto 1">
-            <h3>Producto 1</h3>
-            <p class="price" data-usd="20.00" data-ves="500000">20.00 USD</p>
-            <a href="#cart" class="add-to-cart" onclick="addToCart('Producto 1', 20, 500000)">Agregar al carrito</a>
+
+        <div class="product" data-product="Aceite Corcovado 900 ml" data-stock="100">
+            <img src="https://via.placeholder.com/200x200?text=Aceite+Corcovado+900+ml" alt="Aceite Corcovado 900 ml">
+            <h3>Aceite Corcovado 900 ml</h3>
+            <p class="price" data-usd="5.00" data-ves="125000">5.00 USD</p>
+            <p class="stock">Stock: <span id="stock-AceiteCorcovado900ml">100</span></p>
+            <a href="#cart" class="add-to-cart" onclick="addToCart('Aceite Corcovado 900 ml', 5, 125000, 'AceiteCorcovado900ml')">Agregar al carrito</a>
         </div>
-        <div class="product">
-            <img src="https://via.placeholder.com/200x200?text=Producto+2" alt="Producto 2">
-            <h3>Producto 2</h3>
-            <p class="price" data-usd="30.00" data-ves="750000">30.00 USD</p>
-            <a href="#cart" class="add-to-cart" onclick="addToCart('Producto 2', 30, 750000)">Agregar al carrito</a>
-        </div>
-        <div class="product">
-            <img src="https://via.placeholder.com/200x200?text=Producto+3" alt="Producto 3">
-            <h3>Producto 3</h3>
-            <p class="price" data-usd="40.00" data-ves="1000000">40.00 USD</p>
-            <a href="#cart" class="add-to-cart" onclick="addToCart('Producto 3', 40, 1000000)">Agregar al carrito</a>
-        </div>
+
+        <!-- Añadir más productos aquí con el mismo formato -->
+        
     </section>
 
-    <!-- Sección de Carrito -->
     <section id="cart" class="cart">
         <h2>Tu Carrito</h2>
-        <div class="cart-items" id="cart-items">
-            <!-- Aquí se agregarán los productos seleccionados -->
-        </div>
+        <div class="cart-items" id="cart-items"></div>
         <div class="cart-total" id="cart-total">
             <p>Total: $0.00</p>
             <a href="#checkout" class="checkout-button">Proceder al pago</a>
         </div>
     </section>
 
-    <!-- Sección de Pago -->
     <section id="checkout" class="checkout">
         <h2>Detalles de Pago</h2>
         <form action="#" method="POST">
@@ -263,14 +250,25 @@
 
 <script>
     let cart = [];
+    let inventory = {
+        'AceiteCorcovado900ml': 100,
+        // Añadir otros productos aquí con su stock
+    };
 
-    function addToCart(product, priceUSD, priceVES) {
+    function addToCart(product, priceUSD, priceVES, productId) {
+        if (inventory[productId] <= 0) {
+            alert("No hay suficiente stock para este producto.");
+            return;
+        }
+
         const currency = document.getElementById('currency').value;
         const price = currency === 'USD' ? priceUSD : priceVES;
 
         cart.push({ product, price });
+        inventory[productId]--; // Reduce el stock del producto
         updateCartDisplay();
         updateTotal();
+        updateStockDisplay(productId);
     }
 
     function updateCartDisplay() {
@@ -289,6 +287,11 @@
         const total = cart.reduce((sum, item) => sum + item.price, 0);
         const totalDisplay = document.getElementById('cart-total').querySelector('p');
         totalDisplay.innerText = `Total: ${total.toFixed(2)} ${document.getElementById('currency').value}`;
+    }
+
+    function updateStockDisplay(productId) {
+        const stockElement = document.getElementById('stock-' + productId);
+        stockElement.innerText = inventory[productId];
     }
 </script>
 
