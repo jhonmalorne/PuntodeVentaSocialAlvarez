@@ -228,47 +228,22 @@
             <a href="#cart" class="add-to-cart" onclick="addToCart('Aceite Corcordia Cuarto Litro', 2.00, 50000, 'AceiteCorcordiaCuartoLitro')">Agregar al carrito</a>
         </div>
 
-        <!-- Continúa añadiendo los demás productos de la lista con el mismo formato -->
         <div class="product" data-product="Aceite Corcordia 110 ml" data-stock="100">
             <img src="https://via.placeholder.com/200x200?text=Aceite+Corcordia+110+ml" alt="Aceite Corcordia 110 ml">
             <h3>Aceite Corcordia 110 ml</h3>
-            <p class="price" data-usd="1.50" data-ves="37500">1.50 USD</p>
+            <p class="price" data-usd="1.20" data-ves="30000">1.20 USD</p>
             <p class="stock">Stock: <span id="stock-AceiteCorcordia110ml">100</span></p>
-            <a href="#cart" class="add-to-cart" onclick="addToCart('Aceite Corcordia 110 ml', 1.50, 37500, 'AceiteCorcordia110ml')">Agregar al carrito</a>
+            <a href="#cart" class="add-to-cart" onclick="addToCart('Aceite Corcordia 110 ml', 1.20, 30000, 'AceiteCorcordia110ml')">Agregar al carrito</a>
         </div>
-
-        <div class="product" data-product="Harina Pan Tradicional" data-stock="100">
-            <img src="https://via.placeholder.com/200x200?text=Harina+Pan+Tradicional" alt="Harina Pan Tradicional">
-            <h3>Harina Pan Tradicional</h3>
-            <p class="price" data-usd="2.00" data-ves="50000">2.00 USD</p>
-            <p class="stock">Stock: <span id="stock-HarinaPanTradicional">100</span></p>
-            <a href="#cart" class="add-to-cart" onclick="addToCart('Harina Pan Tradicional', 2.00, 50000, 'HarinaPanTradicional')">Agregar al carrito</a>
-        </div>
-
-        <!-- Añade el resto de los productos de la lista siguiendo el mismo patrón -->
-
     </section>
 
-    <section id="cart" class="cart">
+    <section id="cart" class="cart-items">
         <h2>Tu Carrito</h2>
-        <div class="cart-items" id="cart-items"></div>
-        <div class="cart-total" id="cart-total">
-            <p>Total: $0.00</p>
-            <a href="#checkout" class="checkout-button">Proceder al pago</a>
+        <div id="cart-items"></div>
+        <div class="cart-total">
+            <h3>Total: <span id="cart-total">0.00</span></h3>
+            <a href="#checkout" class="checkout-button">Ir a Pagar</a>
         </div>
-    </section>
-
-    <section id="checkout" class="checkout">
-        <h2>Detalles de Pago</h2>
-        <form action="#" method="POST">
-            <label for="name">Nombre:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="email">Correo Electrónico:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="address">Dirección:</label>
-            <input type="text" id="address" name="address" required>
-            <button type="submit">Confirmar Compra</button>
-        </form>
     </section>
 </main>
 
@@ -277,112 +252,84 @@
 </footer>
 
 <script>
-    // Inventario inicial
-    let inventory = {
-        'Aceite Corcovado 900 ml': 100,
-        'Aceite Corcordia Medio Litro': 100,
-        'Aceite Corcordia Cuarto Litro': 100,
-        'Aceite Corcordia 110 ml': 100,
-        'Harina Pan Tradicional': 100,
-        'Harina Pan Arroz': 100,
-        'Budare Harina': 100,
-        'Harina Belén': 100,
-        'Harina de Trigo Doña Maria': 100,
-        'Harina de Dulce Mar': 100,
-        'Atún Diplomático': 100,
-        'Leche la Pastora': 100,
-        'Estancia': 100,
-        'Nelly 500g': 100,
-        'Nelly 250g': 100,
-        'Pasta Especial Corta 1kg': 100,
-        'Pasta Especial Larga': 100,
-        'Pasta Medio Kilo': 100,
-        'Teta de Cafe Madrid 50g': 100,
-        'Arroz Llano Verde': 100,
-        'Arroz Mary 1kg': 100,
-        'Cafe Madrid 250g': 100,
-        'Cafe Madrid 100g': 100,
-        'Cafe Amanecer 200g': 100,
-        'Teta de Cafe Amanecer 100g': 100,
-        'Cafe Amanecer 50g': 100,
-        'Azucar Konfin y Pastora': 100,
-        'Azucar Medio': 100,
-        'Teta de Azúcar': 100,
-        'Sopa Maggi': 100,
-        'Leche Purelac': 100,
-        'Leche Purelac 200g': 100,
-        'Leche Purelac 100g': 100,
-        'Salsa Heinz 195mg': 100,
-        'Leche Dobom 200g': 100,
-        'Leche Dobon 100g': 100,
-        'Sardina Mar Bonita': 100,
-        'Diablito': 100,
-        'Mayonesa Mavesa 175g': 100,
-        'Vainilla': 100,
-        'Maizena': 100,
-        'Condimentos': 100,
-        'Vinagre': 100,
-        'Mayonesa 475g': 100,
-        'Mayonesa El Rey': 100,
-        'Salsa para Pasta': 100,
-        'Tres Combos de Salsas': 100,
-        'Salsa de Tomate Heinz 57': 100,
-        'Aceite Coamo': 100,
-        'Atún Gran Bodega': 100,
-        'Cubito': 100,
-        'Azúcar Doce Día': 100,
-        'Papelon': 100,
-        'Leche Condensada Cremor': 100,
-        'Aceite Coamo': 100,
-        'Azúcar Don Genaro': 100,
-        'Aceite Vatel': 100,
-        'Margarina Mirasol': 100,
-        'Sal Las Marías': 100,
-        'Salsa de Tomate Grande Heinz': 100,
-        'Salsa de Tomate Grande Pampero': 100,
-        'Azúcar La Pastora 1kg': 100,
-        'Arroz Mary Superior': 100
-    };
+// Definir inventario inicial
+let inventory = {
+    'Aceite Corcovado 900 ml': 100,
+    'Aceite Corcordia Medio Litro': 100,
+    'Aceite Corcordia Cuarto Litro': 100,
+    'Aceite Corcordia 110 ml': 100,
+};
 
-    let cart = [];
-    let currentCurrency = 'USD'; // Inicialmente en dólares
+// Carrito
+let cart = [];
 
-    // Función para agregar productos al carrito
-    function addToCart(productName, priceUSD, priceVES, productId) {
-        if (inventory[productName] > 0) {
-            inventory[productName]--;
-            cart.push({ productName, priceUSD, priceVES });
-            updateStockDisplay(productId);
-            updateCartTotal();
-        } else {
-            alert('No hay stock disponible de este producto.');
+// Moneda seleccionada
+let currentCurrency = 'USD';
+
+// Agregar productos al carrito
+function addToCart(productName, priceUSD, priceVES, productId) {
+    if (inventory[productName] > 0) {
+        // Reducir el stock
+        inventory[productName]--;
+
+        // Añadir al carrito
+        cart.push({ productName, priceUSD, priceVES });
+
+        // Actualizar la UI
+        updateStockDisplay(productId);
+        updateCartDisplay();
+        updateTotal();
+
+        // Deshabilitar el botón si no hay stock
+        if (inventory[productName] === 0) {
+            document.getElementById('add-' + productId).disabled = true;
         }
+    } else {
+        alert('No hay stock disponible de este producto.');
     }
+}
 
-    // Función para actualizar el total del carrito
-    function updateCartTotal() {
-        let total = 0;
-        cart.forEach(item => {
-            total += currentCurrency === 'USD' ? item.priceUSD : item.priceVES;
-        });
-        document.getElementById('cart-total').children[0].innerText = `Total: ${currentCurrency} ${total.toFixed(2)}`;
-    }
+// Actualizar la cantidad de productos en el carrito
+function updateCartDisplay() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = ''; // Limpiar carrito
 
-    // Función para actualizar el stock en la página
-    function updateStockDisplay(productId) {
-        const stockElement = document.getElementById('stock-' + productId);
-        stockElement.innerText = inventory[productId];
-    }
+    cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
 
-    // Función para cambiar la moneda
-    function updateTotal() {
-        const selectedCurrency = document.getElementById('currency').value;
-        currentCurrency = selectedCurrency;
-        updateCartTotal();
-    }
+        const cartItemName = document.createElement('div');
+        cartItemName.innerText = item.productName;
+        cartItem.appendChild(cartItemName);
+
+        const cartItemPrice = document.createElement('div');
+        cartItemPrice.innerText = currentCurrency === 'USD' ? `$${item.priceUSD.toFixed(2)}` : `Bs. ${item.priceVES.toFixed(2)}`;
+        cartItem.appendChild(cartItemPrice);
+
+        cartItemsContainer.appendChild(cartItem);
+    });
+}
+
+// Actualizar el stock en la UI
+function updateStockDisplay(productId) {
+    const stockElement = document.getElementById('stock-' + productId);
+    stockElement.innerText = inventory[productId];
+}
+
+// Actualizar total del carrito
+function updateTotal() {
+    let total = 0;
+    cart.forEach(item => {
+        total += currentCurrency === 'USD' ? item.priceUSD : item.priceVES;
+    });
+    document.getElementById('cart-total').innerText = total.toFixed(2);
+}
+
+// Cambiar moneda
+document.getElementById('currency').addEventListener('change', (e) => {
+    currentCurrency = e.target.value;
+    updateTotal();
+});
 </script>
-
 </body>
 </html>
-
-</script>
