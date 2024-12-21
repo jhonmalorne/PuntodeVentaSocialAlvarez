@@ -81,8 +81,8 @@
 
         .products {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
+            justify-content: space-between;
         }
 
         .product {
@@ -203,6 +203,7 @@
     <section id="products" class="products">
         <h2>Productos Destacados</h2>
 
+        <!-- Listar todos los productos con stock -->
         <div class="product" data-product="Aceite Corcovado 900 ml" data-stock="100">
             <img src="https://via.placeholder.com/200x200?text=Aceite+Corcovado+900+ml" alt="Aceite Corcovado 900 ml">
             <h3>Aceite Corcovado 900 ml</h3>
@@ -211,7 +212,17 @@
             <a href="#cart" class="add-to-cart" onclick="addToCart('Aceite Corcovado 900 ml', 5, 125000, 'AceiteCorcovado900ml')">Agregar al carrito</a>
         </div>
 
-        <!-- Añadir más productos aquí con el mismo formato -->
+        <!-- Agregar más productos aquí con el mismo formato -->
+
+        <div class="product" data-product="Aceite Corcordia Medio Litro" data-stock="100">
+            <img src="https://via.placeholder.com/200x200?text=Aceite+Corcordia+Medio+Litro" alt="Aceite Corcordia Medio Litro">
+            <h3>Aceite Corcordia Medio Litro</h3>
+            <p class="price" data-usd="3.50" data-ves="87500">3.50 USD</p>
+            <p class="stock">Stock: <span id="stock-AceiteCorcordiaMedioLitro">100</span></p>
+            <a href="#cart" class="add-to-cart" onclick="addToCart('Aceite Corcordia Medio Litro', 3.50, 87500, 'AceiteCorcordiaMedioLitro')">Agregar al carrito</a>
+        </div>
+
+        <!-- Agregar otros productos con el mismo formato -->
         
     </section>
 
@@ -245,53 +256,52 @@
 </main>
 
 <footer>
-    <p>© 2024 Yenny.Store - Todos los derechos reservados</p>
+    <p>&copy; 2024 Yenny.Store. Todos los derechos reservados.</p>
 </footer>
 
 <script>
-    let cart = [];
+    // Inventario inicial
     let inventory = {
-        'AceiteCorcovado900ml': 100,
-        // Añadir otros productos aquí con su stock
+        'Aceite Corcovado 900 ml': 100,
+        'Aceite Corcordia Medio Litro': 100,
+        // Agregar más productos aquí
     };
 
-    function addToCart(product, priceUSD, priceVES, productId) {
-        if (inventory[productId] <= 0) {
-            alert("No hay suficiente stock para este producto.");
-            return;
+    let cart = [];
+    let currentCurrency = 'USD'; // Inicialmente en dólares
+
+    // Función para agregar productos al carrito
+    function addToCart(productName, priceUSD, priceVES, productId) {
+        if (inventory[productName] > 0) {
+            inventory[productName]--;
+            cart.push({ productName, priceUSD, priceVES });
+            updateStockDisplay(productId);
+            updateCartTotal();
+        } else {
+            alert('No hay stock disponible de este producto.');
         }
-
-        const currency = document.getElementById('currency').value;
-        const price = currency === 'USD' ? priceUSD : priceVES;
-
-        cart.push({ product, price });
-        inventory[productId]--; // Reduce el stock del producto
-        updateCartDisplay();
-        updateTotal();
-        updateStockDisplay(productId);
     }
 
-    function updateCartDisplay() {
-        const cartItems = document.getElementById('cart-items');
-        cartItems.innerHTML = '';
-
+    // Función para actualizar el total del carrito
+    function updateCartTotal() {
+        let total = 0;
         cart.forEach(item => {
-            const div = document.createElement('div');
-            div.classList.add('cart-item');
-            div.innerHTML = `<p>${item.product}</p><p>${item.price} ${document.getElementById('currency').value}</p>`;
-            cartItems.appendChild(div);
+            total += currentCurrency === 'USD' ? item.priceUSD : item.priceVES;
         });
+        document.getElementById('cart-total').children[0].innerText = `Total: ${currentCurrency} ${total.toFixed(2)}`;
     }
 
-    function updateTotal() {
-        const total = cart.reduce((sum, item) => sum + item.price, 0);
-        const totalDisplay = document.getElementById('cart-total').querySelector('p');
-        totalDisplay.innerText = `Total: ${total.toFixed(2)} ${document.getElementById('currency').value}`;
-    }
-
+    // Función para actualizar el stock en la página
     function updateStockDisplay(productId) {
         const stockElement = document.getElementById('stock-' + productId);
         stockElement.innerText = inventory[productId];
+    }
+
+    // Función para cambiar la moneda
+    function updateTotal() {
+        const selectedCurrency = document.getElementById('currency').value;
+        currentCurrency = selectedCurrency;
+        updateCartTotal();
     }
 </script>
 
