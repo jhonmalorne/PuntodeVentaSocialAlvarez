@@ -89,6 +89,10 @@
             background-color: #00509e;
             color: white;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -100,7 +104,7 @@
         <!-- User Login Section -->
         <div class="form-section">
             <h2>Iniciar Sesión</h2>
-            <form id="loginForm">
+            <form id="loginForm" onsubmit="return loginUser()">
                 <div class="form-group">
                     <label for="username">Usuario</label>
                     <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
@@ -114,7 +118,7 @@
         </div>
 
         <!-- User Management Section -->
-        <div class="form-section">
+        <div class="form-section hidden" id="userManagement">
             <h2>Gestión de Usuarios</h2>
             <form id="userForm">
                 <div class="form-group">
@@ -127,7 +131,7 @@
                 </div>
                 <button type="button" class="btn" onclick="addUser()">Agregar Usuario</button>
             </form>
-            
+
             <table class="user-table">
                 <thead>
                     <tr>
@@ -144,6 +148,10 @@
     </div>
 
     <script>
+        const users = [
+            { username: 'Demostracion', password: '123456' }
+        ];
+
         const userTableBody = document.getElementById('userTableBody');
 
         function addUser() {
@@ -155,22 +163,48 @@
                 return;
             }
 
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${username}</td>
-                <td>${'*'.repeat(password.length)}</td>
-                <td><button onclick="deleteUser(this)" class="btn">Eliminar</button></td>
-            `;
+            users.push({ username, password });
+            updateUserTable();
 
-            userTableBody.appendChild(newRow);
             document.getElementById('newUsername').value = '';
             document.getElementById('newPassword').value = '';
         }
 
-        function deleteUser(button) {
-            const row = button.parentNode.parentNode;
-            userTableBody.removeChild(row);
+        function deleteUser(index) {
+            users.splice(index, 1);
+            updateUserTable();
         }
+
+        function updateUserTable() {
+            userTableBody.innerHTML = '';
+            users.forEach((user, index) => {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${user.username}</td>
+                    <td>${'*'.repeat(user.password.length)}</td>
+                    <td><button onclick="deleteUser(${index})" class="btn">Eliminar</button></td>
+                `;
+                userTableBody.appendChild(newRow);
+            });
+        }
+
+        function loginUser() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const user = users.find(user => user.username === username && user.password === password);
+            if (user) {
+                alert('Bienvenido, ' + username + '!');
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('userManagement').classList.remove('hidden');
+            } else {
+                alert('Usuario o contraseña incorrectos.');
+            }
+
+            return false;
+        }
+
+        updateUserTable();
     </script>
 </body>
 </html>
