@@ -5,60 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yenny.Store POS</title>
     <style>
+        /* Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f0f8ff; /* Light blue background */
         }
-
         header {
             background-color: #00509e; /* Azul mar */
             color: white;
             text-align: center;
             padding: 1rem 0;
         }
-
         header h1 {
             margin: 0;
             font-size: 2rem;
         }
-
         .container {
             padding: 1rem;
             max-width: 1200px;
             margin: auto;
         }
-
-        .form-section {
+        .form-section, .pos-section {
             background-color: white;
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
         }
-
-        .form-section h2 {
+        .form-section h2, .pos-section h2 {
             color: #00509e;
         }
-
         .form-group {
             margin-bottom: 1rem;
         }
-
         .form-group label {
             display: block;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
-
         .form-group input {
             width: 100%;
             padding: 0.5rem;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
         .btn {
             display: inline-block;
             padding: 0.7rem 1.5rem;
@@ -67,29 +59,16 @@
             text-decoration: none;
             border-radius: 4px;
             text-align: center;
+            cursor: pointer;
         }
-
         .btn:hover {
             background-color: #003d73;
         }
-
-        .user-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
-
-        .user-table th, .user-table td {
-            border: 1px solid #ddd;
-            padding: 0.8rem;
-            text-align: left;
-        }
-
-        .user-table th {
-            background-color: #00509e;
-            color: white;
-        }
-
         .hidden {
             display: none;
         }
@@ -102,9 +81,9 @@
 
     <div class="container">
         <!-- User Login Section -->
-        <div class="form-section">
+        <div class="form-section" id="loginSection">
             <h2>Iniciar Sesión</h2>
-            <form id="loginForm" onsubmit="return loginUser()">
+            <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Usuario</label>
                     <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
@@ -113,98 +92,50 @@
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
                 </div>
-                <button type="submit" class="btn">Ingresar</button>
+                <button type="button" class="btn" onclick="login()">Ingresar</button>
+                <div id="loginError" class="error hidden">Usuario o contraseña incorrectos.</div>
             </form>
         </div>
 
-        <!-- User Management Section -->
-        <div class="form-section hidden" id="userManagement">
-            <h2>Gestión de Usuarios</h2>
-            <form id="userForm">
-                <div class="form-group">
-                    <label for="newUsername">Nuevo Usuario</label>
-                    <input type="text" id="newUsername" name="newUsername" placeholder="Ingresa un nombre de usuario">
-                </div>
-                <div class="form-group">
-                    <label for="newPassword">Contraseña</label>
-                    <input type="password" id="newPassword" name="newPassword" placeholder="Ingresa una contraseña">
-                </div>
-                <button type="button" class="btn" onclick="addUser()">Agregar Usuario</button>
-            </form>
-
-            <table class="user-table">
-                <thead>
-                    <tr>
-                        <th>Usuario</th>
-                        <th>Contraseña</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="userTableBody">
-                    <!-- Dynamic rows will be added here -->
-                </tbody>
-            </table>
+        <!-- POS Section (Initially Hidden) -->
+        <div class="pos-section hidden" id="posSection">
+            <h2>Punto de Venta</h2>
+            <p>Bienvenido al punto de venta de Yenny.Store. ¡Comienza a trabajar!</p>
+            <!-- Aquí se pueden añadir más funciones del punto de venta -->
+            <button class="btn" onclick="logout()">Cerrar Sesión</button>
         </div>
     </div>
 
     <script>
-        const users = [
-            { username: 'Demostracion', password: '123456' }
-        ];
+        // Usuario predeterminado
+        const defaultUser = {
+            username: "Demostracion",
+            password: "123456"
+        };
 
-        const userTableBody = document.getElementById('userTableBody');
-
-        function addUser() {
-            const username = document.getElementById('newUsername').value;
-            const password = document.getElementById('newPassword').value;
-
-            if (!username || !password) {
-                alert('Por favor, completa todos los campos.');
-                return;
-            }
-
-            users.push({ username, password });
-            updateUserTable();
-
-            document.getElementById('newUsername').value = '';
-            document.getElementById('newPassword').value = '';
-        }
-
-        function deleteUser(index) {
-            users.splice(index, 1);
-            updateUserTable();
-        }
-
-        function updateUserTable() {
-            userTableBody.innerHTML = '';
-            users.forEach((user, index) => {
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                    <td>${user.username}</td>
-                    <td>${'*'.repeat(user.password.length)}</td>
-                    <td><button onclick="deleteUser(${index})" class="btn">Eliminar</button></td>
-                `;
-                userTableBody.appendChild(newRow);
-            });
-        }
-
-        function loginUser() {
+        // Función para iniciar sesión
+        function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const loginError = document.getElementById('loginError');
 
-            const user = users.find(user => user.username === username && user.password === password);
-            if (user) {
-                alert('Bienvenido, ' + username + '!');
-                document.getElementById('loginForm').classList.add('hidden');
-                document.getElementById('userManagement').classList.remove('hidden');
+            if (username === defaultUser.username && password === defaultUser.password) {
+                // Credenciales correctas
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('posSection').classList.remove('hidden');
             } else {
-                alert('Usuario o contraseña incorrectos.');
+                // Credenciales incorrectas
+                loginError.classList.remove('hidden');
             }
-
-            return false;
         }
 
-        updateUserTable();
+        // Función para cerrar sesión
+        function logout() {
+            document.getElementById('posSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('loginForm').reset();
+            document.getElementById('loginError').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
