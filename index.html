@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yenny.Store POS</title>
     <style>
-        /* Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -101,7 +100,6 @@
         <div class="pos-section hidden" id="posSection">
             <h2>Punto de Venta</h2>
             <p>Bienvenido al punto de venta de Yenny.Store. ¡Comienza a trabajar!</p>
-            <!-- Aquí se pueden añadir más funciones del punto de venta -->
             <button class="btn" onclick="logout()">Cerrar Sesión</button>
         </div>
     </div>
@@ -119,20 +117,21 @@
             const password = document.getElementById('password').value;
             const loginError = document.getElementById('loginError');
 
+            // Verificar credenciales
             if (username === defaultUser.username && password === defaultUser.password) {
-                // Credenciales correctas
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('posSection').classList.remove('hidden');
+                // Ocultar sección de inicio y mostrar POS
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('posSection').style.display = 'block';
             } else {
-                // Credenciales incorrectas
+                // Mostrar mensaje de error
                 loginError.classList.remove('hidden');
             }
         }
 
         // Función para cerrar sesión
         function logout() {
-            document.getElementById('posSection').classList.add('hidden');
-            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('posSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
             document.getElementById('loginForm').reset();
             document.getElementById('loginError').classList.add('hidden');
         }
