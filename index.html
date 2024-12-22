@@ -172,7 +172,8 @@
                     const quantity = parseInt(input.value);
                     if (!isNaN(quantity) && quantity > 0 && products[product] >= quantity) {
                         products[product] -= quantity;
-                        currentTotal += quantity * 1; // Precio unitario ajustable
+                        const price = Math.floor(Math.random() * 10) + 1; // Precio aleatorio entre 1 y 10
+                        currentTotal += quantity * price;
                         totalPrice.textContent = currentTotal;
                         updateInventory();
                         input.value = 0;
