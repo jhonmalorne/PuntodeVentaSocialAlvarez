@@ -3,219 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inversiones YegniMaik - Control de Inventario</title>
+    <title>Inversiones YegniMaik - Control de Inventario y Ventas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
         }
-        header {
-            background-color: #343a40;
+        .header {
+            background-color: #4CAF50;
             color: white;
-            padding: 10px;
+            padding: 10px 20px;
             text-align: center;
         }
-        .container {
-            margin: 20px;
-        }
-        .button {
-            padding: 10px 20px;
-            background-color: #28a745;
+        .btn {
+            background-color: #4CAF50;
             color: white;
+            padding: 10px 20px;
             border: none;
             cursor: pointer;
-            margin: 10px;
+            font-size: 16px;
         }
-        .button-danger {
-            background-color: #dc3545;
+        .btn:hover {
+            background-color: #45a049;
         }
-        .button-primary {
-            background-color: #007bff;
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
         }
-        .section {
-            margin-bottom: 30px;
+        .inventory, .sales, .entrance {
+            width: 30%;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .section input, .section select {
-            padding: 5px;
-            margin-right: 10px;
-        }
-        .inventory-list {
+        .inventory-table, .sales-table, .entrance-table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
-        .inventory-list th, .inventory-list td {
+        .inventory-table th, .sales-table th, .entrance-table th {
+            background-color: #4CAF50;
+            color: white;
             padding: 10px;
             text-align: left;
-            border: 1px solid #ddd;
+        }
+        .inventory-table td, .sales-table td, .entrance-table td {
+            padding: 8px;
+            text-align: left;
+        }
+        .input-field {
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
         .cart {
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
         }
-        .cart-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .cart-table th, .cart-table td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
+        .cart-item {
+            margin-bottom: 10px;
         }
         .total {
-            margin-top: 20px;
-            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #login {
+            display: none;
+        }
+        .password-field {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Inversiones YegniMaik - Control de Inventario</h1>
-</header>
-
-<div class="container">
-    <div class="section">
-        <label for="password">Contraseña para Ventas: </label>
-        <input type="password" id="password" placeholder="Ingrese la contraseña">
-        <button class="button" onclick="checkPassword()">Acceder a Ventas</button>
+    <div class="header">
+        <h1>Inversiones YegniMaik</h1>
+        <button class="btn" onclick="showLogin('ventas')">Acceder a Ventas</button>
+        <button class="btn" onclick="showLogin('entradas')">Acceder a Entradas</button>
     </div>
-    <div id="ventas" class="section" style="display: none;">
-        <h2>Ventas</h2>
-        <label for="producto">Seleccionar producto: </label>
-        <select id="producto">
-            <option value="0">Seleccione un producto</option>
-            <option value="Aceite Corcovado 900 ml">Aceite Corcovado 900 ml</option>
-            <option value="Aceite Corcordia Medio Litro">Aceite Corcordia Medio Litro</option>
-            <option value="Harina Pan Tradicional">Harina Pan Tradicional</option>
-        </select>
-        <input type="number" id="cantidad" placeholder="Cantidad" min="1" value="1">
-        <button class="button" onclick="addToCart()">Agregar al carrito</button>
-        
-        <div id="cart" class="cart">
-            <h3>Carrito de Compras</h3>
-            <table class="cart-table">
+
+    <div id="login" class="login-modal">
+        <h2>Iniciar Sesión</h2>
+        <input type="password" class="password-field" id="password" placeholder="Contraseña">
+        <button class="btn" onclick="login()">Ingresar</button>
+        <button class="btn" onclick="cancelLogin()">Cancelar</button>
+    </div>
+
+    <div class="container">
+        <!-- Inventario -->
+        <div class="inventory">
+            <h2>Inventario</h2>
+            <table class="inventory-table">
                 <thead>
                     <tr>
                         <th>Producto</th>
                         <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Total</th>
                     </tr>
                 </thead>
-                <tbody id="cart-items">
+                <tbody id="inventory-list">
+                    <!-- Productos serán añadidos dinámicamente -->
                 </tbody>
             </table>
-            <div class="total" id="total">
-                Total: 0 BS
+        </div>
+
+        <!-- Ventas -->
+        <div class="sales" id="sales-section" style="display: none;">
+            <h2>Ventas</h2>
+            <div>
+                <select id="product-select" class="input-field">
+                    <!-- Opciones dinámicas de productos -->
+                </select>
+                <button class="btn" onclick="addToCart()">Agregar al Carrito</button>
             </div>
-            <button class="button-danger" onclick="finalizeSale()">Finalizar Venta</button>
+            <div id="cart" class="cart">
+                <h3>Carrito de Compras</h3>
+                <div id="cart-items">
+                    <!-- Elementos del carrito -->
+                </div>
+                <div id="total" class="total">Total: Bs. 0</div>
+                <button class="btn" onclick="confirmSale()">Confirmar Venta</button>
+            </div>
+        </div>
+
+        <!-- Entradas -->
+        <div class="entrance" id="entrance-section" style="display: none;">
+            <h2>Entradas</h2>
+            <select id="product-select-entrance" class="input-field">
+                <!-- Opciones dinámicas de productos -->
+            </select>
+            <input type="number" id="product-quantity" class="input-field" placeholder="Cantidad a agregar">
+            <button class="btn" onclick="addInventory()">Agregar Inventario</button>
         </div>
     </div>
 
-    <div id="inventario" class="section" style="display: none;">
-        <h2>Inventario</h2>
-        <table class="inventory-list">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad en stock</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody id="inventory-list">
-            </tbody>
-        </table>
-    </div>
+    <script>
+        const products = {
+            'Aceite Corcovado 900 ml': { price: 2.35, stock: 100 },
+            'Aceite Corcordia Medio Litro': { price: 1.17, stock: 100 },
+            'Aceite Corcordia Cuarto Litro': { price: 0.60, stock: 100 },
+            'Aceite Corcordia 110 ml': { price: 0.32, stock: 100 },
+            'Harina Pan Tradicional': { price: 1.02, stock: 100 },
+            'Harina Pan Arroz': { price: 0.79, stock: 100 },
+            'Budare Harina': { price: 0.73, stock: 100 },
+            'Harina Belén': { price: 0.73, stock: 100 },
+            'Harina de Trigo Doña Maria': { price: 1.32, stock: 100 },
+            'Harina de Dulce Mar': { price: 1.12, stock: 100 },
+            'Atún Diplomático': { price: 1.08, stock: 100 },
+            'Leche la Pastora': { price: 1.40, stock: 100 },
+            'Estancia': { price: 1.73, stock: 100 },
+            'Nelly 500g': { price: 2.25, stock: 100 },
+            'Nelly 250g': { price: 1.10, stock: 100 },
+            'Pasta Especial Corta 1kg': { price: 1.42, stock: 100 },
+            'Pasta Especial Larga': { price: 1.29, stock: 100 },
+            'Pasta Medio Kilo': { price: 0.53, stock: 100 },
+            'Teta de Cafe Madrid 50g': { price: 1.06, stock: 100 },
+            'Arroz Llano Verde': { price: 1.18, stock: 100 },
+            'Arroz Mary 1kg': { price: 1.09, stock: 100 },
+            'Cafe Madrid 250g': { price: 2.24, stock: 100 },
+            'Cafe Madrid 100g': { price: 0.95, stock: 100 },
+            'Cafe Amanecer 200g': { price: 1.94, stock: 100 },
+            'Teta de Cafe Amanecer 100g': { price: 100, stock: 100 },
+            'Cafe Amanecer 50g': { price: 0.57, stock: 100 },
+            'Azucar Konfin y Pastora': { price: 1.22, stock: 100 },
+            'Azucar Medio': { price: 0.58, stock: 100 },
+            'Teta de Azúcar': { price: 0.25, stock: 100 },
+            'Sopa Maggi': { price: 0.98, stock: 100 },
+            'Leche Purelac': { price: 1.50, stock: 100 },
+            'Leche Purelac 200g': { price: 2.12, stock: 100 },
+            'Leche Purelac 100g': { price: 1.08, stock: 100 },
+            'Salsa Heinz 195mg': { price: 2.15, stock: 100 },
+            'Leche Dobom 200g': { price: 1.09, stock: 100 },
+            'Leche Dobon 100g': { price: 1.15, stock: 100 },
+            'Sardina Mar Bonita': { price: 0.50, stock: 100 },
+            'Diablito': { price: 1.44, stock: 100 },
+            'Mayonesa Mavesa 175g': { price: 1.79, stock: 100 },
+            'Vainilla': { price: 0.69, stock: 100 },
+            'Maizena': { price: 0.88, stock: 100 },
+            'Condimentos': { price: 0.19, stock: 100 },
+            'Vinagre': { price: 0.63, stock: 100 },
+            'Mayonesa 475g': { price: 3.38, stock: 100 },
+            'Mayonesa El Rey': { price: 1.25, stock: 100 },
+            'Salsa para Pasta': { price: 0.66, stock: 100 },
+            'Tres Combos de Salsas': { price: 1.50, stock: 100 },
+            'Salsa de Tomate Heinz 57': { price: 2.13, stock: 100 },
+            'Aceite Coamo': { price: 2.60, stock: 100 },
+            'Atún Gran Bodega': { price: 1.36, stock: 100 },
+            'Cubito': { price: 0.22, stock: 100 },
+            'Azúcar Doce Día': { price: 1.42, stock: 100 },
+            'Papelon': { price: 0.67, stock: 100 },
+            'Leche Condensada Cremor': { price: 1.54, stock: 100 },
+            'Aceite Vatel': { price: 2.82, stock: 100 },
+            'Margarina Mirasol': { price: 2.33, stock: 100 },
+            'Sal Las Marías': { price: 0.33, stock: 100 },
+            'Salsa de Tomate Grande Heinz': { price: 2.18, stock: 100 },
+            'Salsa de Tomate Grande Pampero': { price: 1.95, stock: 100 },
+            'Azúcar La Pastora 1kg': { price: 1.45, stock: 100 },
+            'Arroz Mary Superior': { price: 1.10, stock: 100 }
+        };
 
-    <div class="section" style="display: none;">
-        <label for="password-entradas">Contraseña para Entradas: </label>
-        <input type="password" id="password-entradas" placeholder="Ingrese la contraseña">
-        <button class="button" onclick="checkEntradasPassword()">Acceder a Entradas</button>
-    </div>
+        let cart = [];
+        let currency = 'BS';  // Default currency
 
-</div>
+        function loadInventory() {
+            const inventoryList = document.getElementById("inventory-list");
+            const productSelect = document.getElementById("product-select");
+            const productSelectEntrance = document.getElementById("product-select-entrance");
+            inventoryList.innerHTML = '';
+            productSelect.innerHTML = '';
+            productSelectEntrance.innerHTML = '';
 
-<script>
-    let inventario = {
-        'Aceite Corcovado 900 ml': { price: 2.35, stock: 100 },
-        'Aceite Corcordia Medio Litro': { price: 1.17, stock: 100 },
-        'Harina Pan Tradicional': { price: 1.02, stock: 100 },
-    };
-    let cart = [];
-    let total = 0;
-    let currency = 'BS'; // Default currency
-
-    function checkPassword() {
-        const password = document.getElementById('password').value;
-        if (password === '123456') {
-            document.getElementById('ventas').style.display = 'block';
-            displayInventory();
-        } else {
-            alert('Contraseña incorrecta');
+            Object.keys(products).forEach(product => {
+                inventoryList.innerHTML += `
+                    <tr>
+                        <td>${product}</td>
+                        <td>${products[product].stock}</td>
+                    </tr>
+                `;
+                productSelect.innerHTML += `
+                    <option value="${product}">${product}</option>
+                `;
+                productSelectEntrance.innerHTML += `
+                    <option value="${product}">${product}</option>
+                `;
+            });
         }
-    }
 
-    function addToCart() {
-        const producto = document.getElementById('producto').value;
-        const cantidad = parseInt(document.getElementById('cantidad').value);
+        function showLogin(section) {
+            document.getElementById("login").style.display = "block";
+            sessionStorage.setItem('section', section);
+        }
 
-        if (producto && cantidad > 0 && inventario[producto].stock >= cantidad) {
-            inventario[producto].stock -= cantidad; // Actualizar el stock
-            cart.push({ producto, cantidad, price: inventario[producto].price });
+        function cancelLogin() {
+            document.getElementById("login").style.display = "none";
+        }
+
+        function login() {
+            const password = document.getElementById("password").value;
+            const section = sessionStorage.getItem('section');
+            
+            if ((section === 'ventas' && password === '123456') || (section === 'entradas' && password === '010919')) {
+                document.getElementById("login").style.display = "none";
+                if (section === 'ventas') {
+                    document.getElementById("sales-section").style.display = "block";
+                } else {
+                    document.getElementById("entrance-section").style.display = "block";
+                }
+            } else {
+                alert("Contraseña incorrecta.");
+            }
+        }
+
+        function addToCart() {
+            const selectedProduct = document.getElementById("product-select").value;
+            if (selectedProduct) {
+                cart.push(selectedProduct);
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById("cart-items");
+            const totalDiv = document.getElementById("total");
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                cartItems.innerHTML += `
+                    <div class="cart-item">${item} - ${products[item].price} ${currency}</div>
+                    <div class="cart-item"><button onclick="removeFromCart('${item}')">Eliminar</button></div>
+                `;
+                total += products[item].price;
+            });
+
+            totalDiv.innerHTML = `Total: ${total} ${currency}`;
+        }
+
+        function removeFromCart(item) {
+            cart = cart.filter(cartItem => cartItem !== item);
             updateCart();
-            displayInventory();
-        } else {
-            alert('Cantidad no válida o stock insuficiente');
         }
-    }
 
-    function updateCart() {
-        let cartItems = '';
-        total = 0;
-        cart.forEach(item => {
-            let itemTotal = item.price * item.cantidad;
-            total += itemTotal;
-            cartItems += `<tr>
-                <td>${item.producto}</td>
-                <td>${item.cantidad}</td>
-                <td>${item.price} ${currency}</td>
-                <td>${itemTotal} ${currency}</td>
-            </tr>`;
-        });
-        document.getElementById('cart-items').innerHTML = cartItems;
-        document.getElementById('total').innerHTML = `Total: ${total} ${currency}`;
-    }
-
-    function finalizeSale() {
-        alert('Venta finalizada');
-        cart = [];
-        total = 0;
-        updateCart();
-        displayInventory();
-    }
-
-    function displayInventory() {
-        let inventoryItems = '';
-        for (const producto in inventario) {
-            inventoryItems += `<tr>
-                <td>${producto}</td>
-                <td>${inventario[producto].stock}</td>
-                <td>${inventario[producto].price} ${currency}</td>
-            </tr>`;
+        function confirmSale() {
+            cart.forEach(item => {
+                products[item].stock -= 1;
+            });
+            cart = [];
+            updateCart();
+            loadInventory();
+            alert("Venta confirmada.");
         }
-        document.getElementById('inventory-list').innerHTML = inventoryItems;
-    }
 
-    function checkEntradasPassword() {
-        const password = document.getElementById('password-entradas').value;
-        if (password === '010919') {
-            alert('Acceso concedido a Entradas');
-        } else {
-            alert('Contraseña incorrecta');
+        function addInventory() {
+            const selectedProduct = document.getElementById("product-select-entrance").value;
+            const quantity = parseInt(document.getElementById("product-quantity").value);
+
+            if (selectedProduct && quantity) {
+                products[selectedProduct].stock += quantity;
+                alert("Inventario actualizado.");
+                loadInventory();
+            } else {
+                alert("Por favor ingresa una cantidad válida.");
+            }
         }
-    }
-</script>
+
+        loadInventory();
+    </script>
 
 </body>
 </html>
