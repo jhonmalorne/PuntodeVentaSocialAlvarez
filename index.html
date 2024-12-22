@@ -211,9 +211,14 @@
             'Arroz Mary Superior': { price: 1.10, stock: 100 }
         };
 
-        let cart = [];
-        let currency = 'BS';  // Default currency
+        let carrito = [];
+        let currency = "USD";
 
+        function toggleCurrency() {
+            currency = currency === "USD" ? "BS" : "USD";
+            document.getElementById("currencyBtn").innerText = `Moneda: ${currency}`;
+            document.getElementById("currency").innerText = currency;
+        }
         function loadInventory() {
             const inventoryList = document.getElementById("inventory-list");
             const productSelect = document.getElementById("product-select");
