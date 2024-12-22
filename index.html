@@ -68,7 +68,21 @@
             <button class="btn" onclick="validateVentas()">Acceder</button>
 
             <div id="ventasContent" class="hidden">
-                <h3>Carrito de Compras</h3>
+                <h3>Productos Disponibles</h3>
+                <table class="table" id="productosTable">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio (USD)</th>
+                            <th>Stock</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Productos dinámicos -->
+                    </tbody>
+                </table>
+                 <h3>Carrito de Compras</h3>
                 <table class="table" id="carritoTable">
                     <thead>
                         <tr>
@@ -76,6 +90,7 @@
                             <th>Cantidad</th>
                             <th>Precio (USD)</th>
                             <th>Subtotal</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -248,39 +263,85 @@
             // Resto de productos
         };
 
+        let carrito = [];
+        let currency = "USD";
+
         function toggleCurrency() {
             currency = currency === "USD" ? "BS" : "USD";
             document.getElementById("currencyBtn").innerText = `Moneda: ${currency}`;
             document.getElementById("currency").innerText = currency;
-            // Actualizar precios y total aquí si es necesario.
         }
 
         function showVentas() {
             hideAllSections();
             document.getElementById("ventasSection").classList.remove("hidden");
-        }
 
-        function showEntradas() {
-            hideAllSections();
-            document.getElementById("entradasSection").classList.remove("hidden");
-        }
-
-        function showInventario() {
-            hideAllSections();
-            const tbody = document.getElementById("inventarioTable").querySelector("tbody");
-            tbody.innerHTML = "";
+            // Mostrar productos disponibles
+            const productosTable = document.getElementById("productosTable").querySelector("tbody");
+            productosTable.innerHTML = "";
             for (const [producto, cantidad] of Object.entries(inventario)) {
-                tbody.innerHTML += `<tr><td>${producto}</td><td>${cantidad}</td></tr>`;
+                if (cantidad > 0) {
+                    productosTable.innerHTML += `
+                        <tr>
+                            <td>${producto}</td>
+                            <td>${precios[producto].toFixed(2)}</td>
+                            <td>${cantidad}</td>
+                            <td><button class="btn" onclick="agregarAlCarrito('${producto}')">Agregar</button></td>
+                        </tr>`;
+                }
             }
-            document.getElementById("inventarioSection").classList.remove("hidden");
         }
 
-        function hideAllSections() {
-            document.getElementById("ventasSection").classList.add("hidden");
-            document.getElementById("entradasSection").classList.add("hidden");
-            document.getElementById("inventarioSection").classList.add("hidden");
+        function agregarAlCarrito(producto) {
+            const productoEnCarrito = carrito.find(item => item.nombre === producto);
+
+            if (productoEnCarrito) {
+                productoEnCarrito.cantidad++;
+            } else {
+                carrito.push({ nombre: producto, cantidad: 1, precio: precios[producto] });
+            }
+
+            actualizarCarrito();
         }
 
+        function actualizarCarrito() {
+            const carritoTable = document.getElementById("carritoTable").querySelector("tbody");
+            carritoTable.innerHTML = "";
+
+            let total = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.cantidad * item.precio;
+                total += subtotal;
+
+                carritoTable.innerHTML += `
+                    <tr>
+                        <td>${item.nombre}</td>
+                        <td>${item.cantidad}</td>
+                        <td>${item.precio.toFixed(2)}</td>
+                        <td>${subtotal.toFixed(2)}</td>
+                        <td><button class="btn" onclick="eliminarDelCarrito('${item.nombre}')">Eliminar</button></td>
+                    </tr>`;
+            });
+
+            document.getElementById("total").innerText = total.toFixed(2);
+        }
+
+        function eliminarDelCarrito(producto) {
+            carrito = carrito.filter(item => item.nombre !== producto);
+            actualizarCarrito();
+        }
+
+        function finalizarVenta() {
+            carrito.forEach(item => {
+                inventario[item.nombre] -= item.cantidad;
+            });
+
+            carrito = [];
+            alert("Venta finalizada.");
+            actualizarCarrito();
+            showVentas();
+        }
         function validateVentas() {
             const password = document.getElementById("ventasPassword").value;
             if (password === "123456") {
