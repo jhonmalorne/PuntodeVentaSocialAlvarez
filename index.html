@@ -1,67 +1,171 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inversiones YegniMaik - Inventario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Inversiones YegniMaik - Inventario y Ventas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f9;
         }
-        .header {
-            background-color: #343a40;
-            color: #fff;
-            padding: 1rem;
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .header button {
-            margin-left: 0.5rem;
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
         }
+
+        header button {
+            padding: 10px 15px;
+            margin-left: 10px;
+            background-color: #e74c3c;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        header button:hover {
+            background-color: #c0392b;
+        }
+
         .container {
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        .btn {
+            padding: 10px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #219150;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: bold;
             margin-top: 20px;
         }
-        .product-row {
-            margin-bottom: 15px;
+
+        .input-small {
+            width: 50px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="header">
+    <header>
         <h1>Inversiones YegniMaik</h1>
         <div>
-            <button class="btn btn-primary" onclick="switchCurrency('USD')">USD</button>
-            <button class="btn btn-primary" onclick="switchCurrency('BS')">BS</button>
+            <button onclick="showSection('ventas')">Ventas</button>
+            <button onclick="showSection('inventario')">Inventario</button>
+            <button onclick="showSection('entradas')">Entradas</button>
         </div>
-    </div>
+    </header>
 
     <div class="container">
-        <div class="d-flex justify-content-between mb-4">
-            <button class="btn btn-success" onclick="showSales()">Ventas</button>
-            <button class="btn btn-info" onclick="showInventory()">Inventario</button>
+        <!-- Ventas Section -->
+        <div id="ventas" class="hidden">
+            <h2>Ventas</h2>
+            <table id="productTable">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic content will be added here -->
+                </tbody>
+            </table>
+            <div class="cart-total">Total: <span id="totalAmount">0.00</span> <span id="currency">USD</span></div>
         </div>
 
-        <div id="sales-section">
-            <h2>Registrar Venta</h2>
-            <div id="product-list" class="mb-4"></div>
-            <h3>Total: <span id="total-price">0</span> <span id="currency">USD</span></h3>
-            <button class="btn btn-primary" onclick="completeSale()">Completar Venta</button>
+        <!-- Inventario Section -->
+        <div id="inventario" class="hidden">
+            <h2>Inventario</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryTable">
+                    <!-- Dynamic content will be added here -->
+                </tbody>
+            </table>
         </div>
 
-        <div id="inventory-section" style="display: none;">
-            <h2>Inventario Actualizado</h2>
-            <ul id="inventory-list" class="list-group"></ul>
+        <!-- Entradas Section -->
+        <div id="entradas" class="hidden">
+            <h2>Entradas</h2>
+            <form id="addProductForm">
+                <label for="productName">Nombre del Producto:</label>
+                <input type="text" id="productName" required>
+                <label for="productQuantity">Cantidad:</label>
+                <input type="number" id="productQuantity" required>
+                <button type="submit" class="btn">Agregar Producto</button>
+            </form>
         </div>
     </div>
 
     <script>
-        const products = {
-            'Aceite Corcovado 900 ml': 100,
+        const inventory = {
+             'Aceite Corcovado 900 ml': 100,
             'Aceite Corcordia Medio Litro': 100,
             'Aceite Corcordia Cuarto Litro': 100,
             'Aceite Corcordia 110 ml': 100,
@@ -126,92 +230,54 @@
             'Arroz Mary Superior': 100,
         };
 
-        let currency = 'USD';
-        const productList = document.getElementById('product-list');
-        const inventoryList = document.getElementById('inventory-list');
-        const totalPrice = document.getElementById('total-price');
-        const currencyDisplay = document.getElementById('currency');
-        let currentTotal = 0;
+        const prices = {};
+        Object.keys(inventory).forEach(product => {
+            prices[product] = (Math.random() * 10 + 5).toFixed(2);
+        });
 
-        function switchCurrency(newCurrency) {
-            currency = newCurrency;
-            currencyDisplay.textContent = newCurrency;
-            updateInventory();
-        }
-
-        function updateInventory() {
-            inventoryList.innerHTML = '';
-            Object.keys(products).forEach(product => {
-                const li = document.createElement('li');
-                li.className = 'list-group-item';
-                li.textContent = `${product}: ${products[product]} unidades`;
-                inventoryList.appendChild(li);
+        function showSection(section) {
+            document.querySelectorAll('.container > div').forEach(div => {
+                div.classList.add('hidden');
             });
+            document.getElementById(section).classList.remove('hidden');
         }
 
-        function renderProductList() {
-            productList.innerHTML = '';
-            Object.keys(products).forEach(product => {
-                const row = document.createElement('div');
-                row.className = 'product-row d-flex align-items-center';
-
-                const name = document.createElement('span');
-                name.textContent = product;
-                name.style.flex = 1;
-
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.value = 0;
-                input.style.width = '60px';
-                input.className = 'form-control mx-2';
-
-                const button = document.createElement('button');
-                button.textContent = 'Agregar';
-                button.className = 'btn btn-primary';
-                button.onclick = () => {
-                    const quantity = parseInt(input.value);
-                    if (!isNaN(quantity) && quantity > 0 && products[product] >= quantity) {
-                        products[product] -= quantity;
-                        const price = Math.floor(Math.random() * 10) + 1; // Precio aleatorio entre 1 y 10
-                        currentTotal += quantity * price;
-                        totalPrice.textContent = currentTotal;
-                        updateInventory();
-                        input.value = 0;
-                    } else {
-                        alert('Cantidad no válida o insuficiente en inventario.');
-                    }
-                };
-
-                row.appendChild(name);
-                row.appendChild(input);
-                row.appendChild(button);
-                productList.appendChild(row);
-            });
-        }
-
-        function showSales() {
-            document.getElementById('sales-section').style.display = 'block';
-            document.getElementById('inventory-section').style.display = 'none';
-        }
-
-        function showInventory() {
-            document.getElementById('sales-section').style.display = 'none';
-            document.getElementById('inventory-section').style.display = 'block';
-            updateInventory();
-        }
-
-        function completeSale() {
-            if (currentTotal > 0) {
-                alert(`Venta completada por ${currentTotal} ${currency}`);
-                currentTotal = 0;
-                totalPrice.textContent = currentTotal;
-                renderProductList();
-            } else {
-                alert('No hay productos en el carrito.');
+        function updateInventoryTable() {
+            const inventoryTable = document.getElementById('inventoryTable');
+            inventoryTable.innerHTML = '';
+            for (const [product, stock] of Object.entries(inventory)) {
+                inventoryTable.innerHTML += `<tr><td>${product}</td><td>${stock}</td></tr>`;
             }
         }
 
-        renderProductList();
+        function updateProductTable() {
+            const productTable = document.querySelector('#productTable tbody');
+            productTable.innerHTML = '';
+            for (const [product, stock] of Object.entries(inventory)) {
+                productTable.innerHTML += `
+                    <tr>
+                        <td>${product}</td>
+                        <td>${stock}</td>
+                        <td>${prices[product]} USD</td>
+                        <td><input type="number" class="input-small" min="1" value="1" id="quantity-${product}"></td>
+                        <td><button class="btn" onclick="addToCart('${product}')">Agregar</button></td>
+                    </tr>`;
+            }
+        }
+
+        function addToCart(product) {
+            const quantity = parseInt(document.getElementById(`quantity-${product}`).value);
+            if (quantity > inventory[product]) {
+                alert('Cantidad no disponible en inventario');
+                return;
+            }
+            inventory[product] -= quantity;
+            updateInventoryTable();
+            updateProductTable();
+        }
+
+        updateInventoryTable();
+        updateProductTable();
     </script>
 </body>
 </html>
