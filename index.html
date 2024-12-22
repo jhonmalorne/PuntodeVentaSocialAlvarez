@@ -75,14 +75,11 @@
 </header>
 
 <div class="container">
-    <!-- Contraseña para acceder a Ventas -->
     <div class="section">
         <label for="password">Contraseña para Ventas: </label>
         <input type="password" id="password" placeholder="Ingrese la contraseña">
         <button class="button" onclick="checkPassword()">Acceder a Ventas</button>
     </div>
-
-    <!-- Ventas -->
     <div id="ventas" class="section" style="display: none;">
         <h2>Ventas</h2>
         <label for="producto">Seleccionar producto: </label>
@@ -91,7 +88,6 @@
             <option value="Aceite Corcovado 900 ml">Aceite Corcovado 900 ml</option>
             <option value="Aceite Corcordia Medio Litro">Aceite Corcordia Medio Litro</option>
             <option value="Harina Pan Tradicional">Harina Pan Tradicional</option>
-            <!-- Agrega aquí todos los productos -->
         </select>
         <input type="number" id="cantidad" placeholder="Cantidad" min="1" value="1">
         <button class="button" onclick="addToCart()">Agregar al carrito</button>
@@ -108,7 +104,6 @@
                     </tr>
                 </thead>
                 <tbody id="cart-items">
-                    <!-- Items del carrito -->
                 </tbody>
             </table>
             <div class="total" id="total">
@@ -118,7 +113,6 @@
         </div>
     </div>
 
-    <!-- Inventario -->
     <div id="inventario" class="section" style="display: none;">
         <h2>Inventario</h2>
         <table class="inventory-list">
@@ -130,12 +124,10 @@
                 </tr>
             </thead>
             <tbody id="inventory-list">
-                <!-- Inventario -->
             </tbody>
         </table>
     </div>
 
-    <!-- Entradas -->
     <div class="section" style="display: none;">
         <label for="password-entradas">Contraseña para Entradas: </label>
         <input type="password" id="password-entradas" placeholder="Ingrese la contraseña">
@@ -149,13 +141,11 @@
         'Aceite Corcovado 900 ml': { price: 2.35, stock: 100 },
         'Aceite Corcordia Medio Litro': { price: 1.17, stock: 100 },
         'Harina Pan Tradicional': { price: 1.02, stock: 100 },
-        // Agrega todos los productos aquí
     };
     let cart = [];
     let total = 0;
     let currency = 'BS'; // Default currency
 
-    // Función para verificar la contraseña de ventas
     function checkPassword() {
         const password = document.getElementById('password').value;
         if (password === '123456') {
@@ -166,7 +156,6 @@
         }
     }
 
-    // Función para agregar al carrito
     function addToCart() {
         const producto = document.getElementById('producto').value;
         const cantidad = parseInt(document.getElementById('cantidad').value);
@@ -181,7 +170,6 @@
         }
     }
 
-    // Función para actualizar el carrito
     function updateCart() {
         let cartItems = '';
         total = 0;
@@ -199,7 +187,6 @@
         document.getElementById('total').innerHTML = `Total: ${total} ${currency}`;
     }
 
-    // Función para finalizar la venta
     function finalizeSale() {
         alert('Venta finalizada');
         cart = [];
@@ -208,7 +195,6 @@
         displayInventory();
     }
 
-    // Función para mostrar el inventario
     function displayInventory() {
         let inventoryItems = '';
         for (const producto in inventario) {
@@ -221,12 +207,10 @@
         document.getElementById('inventory-list').innerHTML = inventoryItems;
     }
 
-    // Función para verificar la contraseña de entradas
     function checkEntradasPassword() {
         const password = document.getElementById('password-entradas').value;
         if (password === '010919') {
             alert('Acceso concedido a Entradas');
-            // Aquí puedes agregar las funcionalidades de entradas (agregar productos al inventario)
         } else {
             alert('Contraseña incorrecta');
         }
