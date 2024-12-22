@@ -3,169 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inversiones YegniMaik - Inventario y Ventas</title>
+    <title>Inversiones YegniMaik</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #f4f4f4;
         }
-
         header {
-            background-color: #2c3e50;
+            background-color: #007bff;
             color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        header button {
-            padding: 10px 15px;
-            margin-left: 10px;
-            background-color: #e74c3c;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        header button:hover {
-            background-color: #c0392b;
-        }
-
-        .container {
             padding: 20px;
+            text-align: center;
         }
-
+        .container {
+            margin: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
         .hidden {
             display: none;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin: 20px 0;
         }
-
         table, th, td {
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
         }
-
         th, td {
             padding: 10px;
             text-align: left;
         }
-
         th {
-            background-color: #34495e;
+            background-color: #007bff;
             color: white;
-        }
-
-        .btn {
-            padding: 10px;
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .btn:hover {
-            background-color: #219150;
-        }
-
-        .btn-danger {
-            background-color: #e74c3c;
-        }
-
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-
-        .cart-total {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        .input-small {
-            width: 50px;
-            text-align: center;
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Inversiones YegniMaik</h1>
-        <div>
-            <button onclick="showSection('ventas')">Ventas</button>
-            <button onclick="showSection('inventario')">Inventario</button>
-            <button onclick="showSection('entradas')">Entradas</button>
-        </div>
     </header>
-
     <div class="container">
-        <!-- Ventas Section -->
-        <div id="ventas" class="hidden">
+        <div style="text-align: right;">
+            <label for="currency">Moneda:</label>
+            <select id="currency">
+                <option value="USD">USD</option>
+                <option value="BS">BS</option>
+            </select>
+        </div>
+        <button class="button" onclick="authenticate('sales')">Ventas</button>
+        <button class="button" onclick="authenticate('inventory')">Inventario</button>
+        <button class="button" onclick="authenticate('entries')">Entradas</button>
+
+        <div id="sales-section" class="hidden">
             <h2>Ventas</h2>
-            <table id="productTable">
+            <table id="sales-table">
                 <thead>
                     <tr>
                         <th>Producto</th>
-                        <th>Stock</th>
-                        <th>Precio</th>
                         <th>Cantidad</th>
-                        <th>Acciones</th>
+                        <th>Precio</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Dynamic content will be added here -->
-                </tbody>
+                <tbody></tbody>
             </table>
-            <div class="cart-total">Total: <span id="totalAmount">0.00</span> <span id="currency">USD</span></div>
+            <p>Total: <span id="sales-total">0</span> <span id="currency-label">USD</span></p>
+            <button class="button" onclick="finalizeSale()">Finalizar Venta</button>
         </div>
 
-        <!-- Inventario Section -->
-        <div id="inventario" class="hidden">
+        <div id="inventory-section" class="hidden">
             <h2>Inventario</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Producto</th>
-                        <th>Stock</th>
+                        <th>Cantidad</th>
                     </tr>
                 </thead>
-                <tbody id="inventoryTable">
-                    <!-- Dynamic content will be added here -->
+                <tbody id="inventory-table">
+                    <!-- Inventory items will be populated here -->
                 </tbody>
             </table>
         </div>
 
-        <!-- Entradas Section -->
-        <div id="entradas" class="hidden">
+        <div id="entries-section" class="hidden">
             <h2>Entradas</h2>
-            <form id="addProductForm">
-                <label for="productName">Nombre del Producto:</label>
-                <input type="text" id="productName" required>
-                <label for="productQuantity">Cantidad:</label>
-                <input type="number" id="productQuantity" required>
-                <button type="submit" class="btn">Agregar Producto</button>
-            </form>
+            <label for="new-product">Producto:</label>
+            <input type="text" id="new-product">
+            <label for="new-quantity">Cantidad:</label>
+            <input type="number" id="new-quantity">
+            <button class="button" onclick="addToInventory()">Agregar</button>
         </div>
     </div>
 
     <script>
-        const inventory = {
-             'Aceite Corcovado 900 ml': 100,
+        const products = {
+            'Aceite Corcovado 900 ml': 100,
             'Aceite Corcordia Medio Litro': 100,
             'Aceite Corcordia Cuarto Litro': 100,
             'Aceite Corcordia 110 ml': 100,
@@ -230,54 +178,53 @@
             'Arroz Mary Superior': 100,
         };
 
-        const prices = {};
-        Object.keys(inventory).forEach(product => {
-            prices[product] = (Math.random() * 10 + 5).toFixed(2);
-        });
+        const currencyRates = {
+            'USD': 1,
+            'BS': 3.5 // Example conversion rate
+        };
 
-        function showSection(section) {
-            document.querySelectorAll('.container > div').forEach(div => {
-                div.classList.add('hidden');
-            });
-            document.getElementById(section).classList.remove('hidden');
+        function authenticate(section) {
+            let password = prompt('Ingrese la contraseña:');
+
+            if ((section === 'sales' && password === '123456') ||
+                (section === 'inventory' && password === '123456') ||
+                (section === 'entries' && password === '010919')) {
+                document.getElementById(`${section}-section`).classList.remove('hidden');
+            } else {
+                alert('Contraseña incorrecta.');
+            }
+        }
+
+        function finalizeSale() {
+            // Logic to finalize the sale
+            alert('Venta finalizada. Inventario actualizado.');
+        }
+
+        function addToInventory() {
+            const product = document.getElementById('new-product').value;
+            const quantity = parseInt(document.getElementById('new-quantity').value, 10);
+
+            if (inventory[product]) {
+                inventory[product] += quantity;
+            } else {
+                inventory[product] = quantity;
+            }
+            alert('Inventario actualizado.');
+            updateInventoryTable();
         }
 
         function updateInventoryTable() {
-            const inventoryTable = document.getElementById('inventoryTable');
-            inventoryTable.innerHTML = '';
-            for (const [product, stock] of Object.entries(inventory)) {
-                inventoryTable.innerHTML += `<tr><td>${product}</td><td>${stock}</td></tr>`;
+            const table = document.getElementById('inventory-table');
+            table.innerHTML = '';
+
+            for (const [product, quantity] of Object.entries(inventory)) {
+                const row = `<tr><td>${product}</td><td>${quantity}</td></tr>`;
+                table.innerHTML += row;
             }
         }
 
-        function updateProductTable() {
-            const productTable = document.querySelector('#productTable tbody');
-            productTable.innerHTML = '';
-            for (const [product, stock] of Object.entries(inventory)) {
-                productTable.innerHTML += `
-                    <tr>
-                        <td>${product}</td>
-                        <td>${stock}</td>
-                        <td>${prices[product]} USD</td>
-                        <td><input type="number" class="input-small" min="1" value="1" id="quantity-${product}"></td>
-                        <td><button class="btn" onclick="addToCart('${product}')">Agregar</button></td>
-                    </tr>`;
-            }
-        }
-
-        function addToCart(product) {
-            const quantity = parseInt(document.getElementById(`quantity-${product}`).value);
-            if (quantity > inventory[product]) {
-                alert('Cantidad no disponible en inventario');
-                return;
-            }
-            inventory[product] -= quantity;
-            updateInventoryTable();
-            updateProductTable();
-        }
-
+        // Initial population of inventory table
         updateInventoryTable();
-        updateProductTable();
     </script>
 </body>
 </html>
