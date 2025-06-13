@@ -3,342 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inversiones YegniMaik - Control de Inventario</title>
+    <title>Sand Box - Incubadora de Startups</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ff6f61, #fddb3a);
+            color: #333;
         }
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: white;
         }
         h1 {
-            font-size: 24px;
             margin: 0;
         }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .project, .comment-box {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
         button {
-            padding: 10px 20px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
+            padding: 10px;
+            background: #ff6f61;
             border: none;
-            font-size: 16px;
-            margin: 5px;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
         }
-        button:disabled {
-            background-color: #ccc;
+        button:hover {
+            background: #d94e3f;
         }
-        .password-container {
-            margin-bottom: 20px;
-        }
-        .inventory, .cart, .sales-summary, .inventory-summary {
-            margin-top: 20px;
-            border: 1px solid #ccc;
+        textarea {
+            width: 100%;
             padding: 10px;
             border-radius: 5px;
         }
-        .inventory table, .cart table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .inventory table th, .cart table th {
-            text-align: left;
-        }
-        .inventory table td, .cart table td {
-            padding: 8px;
-        }
-        .inventory table tr:nth-child(even), .cart table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .currency-selector {
-            margin-left: auto;
-        }
-        .currency-selector select {
-            padding: 5px;
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #222;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Inversiones YegniMaik - Control de Inventario</h1>
-            <div class="currency-selector">
-                <label for="currency">Moneda: </label>
-                <select id="currency" onchange="updateCurrency()">
-                    <option value="bs">Bolívares</option>
-                    <option value="usd">USD</option>
-                </select>
-            </div>
-        </header>
+    <header>
+        <h1>Sand Box</h1>
+        <p>Impulsamos startups en Venezuela con oportunidades de inversión.</p>
+    </header>
 
-        <!-- Contraseña para acceder a ventas -->
-        <div class="password-container" id="password-container">
-            <label for="password">Contraseña para Ventas: </label>
-            <input type="password" id="password" placeholder="Ingresa la contraseña">
-            <button onclick="checkPassword()">Acceder</button>
+    <section id="projects">
+        <h2>Proyectos Postulantes</h2>
+        <div class="project">
+            <h3>Startup 1</h3>
+            <p>Descripción breve del proyecto.</p>
+            <span>Inversión requerida: $10,000</span>
+            <button>Ver detalles</button>
         </div>
-
-        <!-- Sección de inventario -->
-        <div class="inventory" id="inventory-section" style="display:none;">
-            <h2>Inventario</h2>
-            <table id="inventory-table">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Cantidad en Stock</th>
-                        <th>Precio (BS)</th>
-                        <th>Precio (USD)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Aquí se llenarán los productos -->
-                </tbody>
-            </table>
-            <button onclick="showEntradas()">Entradas</button>
-            <button onclick="showVentas()">Ventas</button>
+        <div class="project">
+            <h3>Startup 2</h3>
+            <p>Innovación en tecnología financiera.</p>
+            <span>Inversión requerida: $20,000</span>
+            <button>Ver detalles</button>
         </div>
+    </section>
 
-        <!-- Sección de Ventas -->
-        <div class="sales-summary" id="sales-summary" style="display:none;">
-            <h2>Ventas</h2>
-            <div>
-                <label for="product-select">Selecciona un producto: </label>
-                <select id="product-select" onchange="addToCart()">
-                    <!-- Productos disponibles serán agregados aquí -->
-                </select>
-                <label for="quantity">Cantidad: </label>
-                <input type="number" id="quantity" value="1" min="1">
-                <button onclick="clearCart()">Limpiar Carrito</button>
-            </div>
-            <h3>Carrito de Compras</h3>
-            <table id="cart-table">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Carrito de compras -->
-                </tbody>
-            </table>
-            <div>
-                <p>Total: <span id="total-bs">0</span> BS | <span id="total-usd">0</span> USD</p>
-            </div>
-            <button onclick="confirmSale()">Confirmar Venta</button>
+    <section id="comments">
+        <h2>Comentarios</h2>
+        <textarea placeholder="Escribe tu comentario..."></textarea>
+        <button>Enviar</button>
+        <div class="comment-box">
+            <p><strong>Usuario 1:</strong> ¡Gran iniciativa!</p>
         </div>
-
-        <!-- Sección de Entradas -->
-        <div class="inventory-summary" id="inventory-summary" style="display:none;">
-            <h2>Entradas de Inventario</h2>
-            <label for="product-select-entrance">Selecciona un producto: </label>
-            <select id="product-select-entrance" onchange="addEntrance()">
-                <!-- Productos disponibles serán agregados aquí -->
-            </select>
-            <label for="quantity-entrance">Cantidad a agregar: </label>
-            <input type="number" id="quantity-entrance" value="1" min="1">
-            <button onclick="confirmEntrance()">Confirmar Entrada</button>
+        <div class="comment-box">
+            <p><strong>Usuario 2:</strong> Me interesa invertir, ¿cómo puedo hacerlo?</p>
         </div>
+    </section>
 
-        <!-- Contraseña para Entradas -->
-        <div class="password-container" id="entradas-password-container" style="display:none;">
-            <label for="entradas-password">Contraseña para Entradas: </label>
-            <input type="password" id="entradas-password" placeholder="Ingresa la contraseña">
-            <button onclick="checkEntradasPassword()">Acceder</button>
-        </div>
-    </div>
-
-    <script>
-        let inventory = {
-            'Aceite Corcovado 900 ml': { stock: 100, priceBS: 2.35, priceUSD: 0.25 },
-            'Aceite Corcordia Medio Litro': { stock: 100, priceBS: 1.17, priceUSD: 0.12 },
-            'Aceite Corcordia Cuarto Litro': { stock: 100, priceBS: 0.60, priceUSD: 0.06 },
-            'Aceite Corcordia 110 ml': { stock: 100, priceBS: 0.32, priceUSD: 0.03 },
-            'Harina Pan Tradicional': { stock: 100, priceBS: 1.02, priceUSD: 0.10 },
-            'Harina Pan Arroz': { stock: 100, priceBS: 0.79, priceUSD: 0.08 },
-            'Budare Harina': { stock: 100, priceBS: 0.73, priceUSD: 0.07 },
-            'Harina Belén': { stock: 100, priceBS: 0.73, priceUSD: 0.07 },
-            'Harina de Trigo Doña Maria': { stock: 100, priceBS: 1.32, priceUSD: 0.13 },
-            'Harina de Dulce Mar': { stock: 100, priceBS: 1.12, priceUSD: 0.11 },
-            // Añadir el resto de los productos aquí
-        };
-
-        let cart = [];
-        let currentCurrency = 'bs'; // 'bs' or 'usd'
-
-        // Cargar el inventario en la tabla
-        function loadInventory() {
-            const inventoryTable = document.getElementById('inventory-table').getElementsByTagName('tbody')[0];
-            inventoryTable.innerHTML = '';
-            for (let product in inventory) {
-                let row = inventoryTable.insertRow();
-                let cell1 = row.insertCell(0);
-                let cell2 = row.insertCell(1);
-                let cell3 = row.insertCell(2);
-                let cell4 = row.insertCell(3);
-
-                cell1.textContent = product;
-                cell2.textContent = inventory[product].stock;
-                cell3.textContent = inventory[product].priceBS + ' BS';
-                cell4.textContent = inventory[product].priceUSD + ' USD';
-            }
-        }
-
-        // Cargar los productos en el carrito de compras
-        function loadProductSelect() {
-            const productSelect = document.getElementById('product-select');
-            productSelect.innerHTML = '';
-            for (let product in inventory) {
-                let option = document.createElement('option');
-                option.value = product;
-                option.textContent = product;
-                productSelect.appendChild(option);
-            }
-        }
-
-        // Agregar producto al carrito
-        function addToCart() {
-            const selectedProduct = document.getElementById('product-select').value;
-            const quantity = parseInt(document.getElementById('quantity').value);
-
-            if (selectedProduct && quantity && inventory[selectedProduct].stock >= quantity) {
-                let productPrice = currentCurrency === 'bs' ? inventory[selectedProduct].priceBS : inventory[selectedProduct].priceUSD;
-                let productTotal = quantity * productPrice;
-
-                cart.push({ product: selectedProduct, quantity, price: productPrice, total: productTotal });
-
-                inventory[selectedProduct].stock -= quantity; // Restar del inventario
-
-                updateCartTable();
-                updateTotal();
-            } else {
-                alert("Cantidad no válida o stock insuficiente.");
-            }
-        }
-
-        // Mostrar carrito de compras
-        function updateCartTable() {
-            const cartTable = document.getElementById('cart-table').getElementsByTagName('tbody')[0];
-            cartTable.innerHTML = '';
-            cart.forEach(item => {
-                let row = cartTable.insertRow();
-                let cell1 = row.insertCell(0);
-                let cell2 = row.insertCell(1);
-                let cell3 = row.insertCell(2);
-                let cell4 = row.insertCell(3);
-
-                cell1.textContent = item.product;
-                cell2.textContent = item.quantity;
-                cell3.textContent = item.price + ' ' + (currentCurrency === 'bs' ? 'BS' : 'USD');
-                cell4.textContent = item.total + ' ' + (currentCurrency === 'bs' ? 'BS' : 'USD');
-            });
-        }
-
-        // Actualizar total
-        function updateTotal() {
-            let totalBS = 0, totalUSD = 0;
-            cart.forEach(item => {
-                totalBS += item.total;
-                totalUSD += item.total * (currentCurrency === 'bs' ? 1 : 1); // Conversion si es necesario
-            });
-
-            document.getElementById('total-bs').textContent = totalBS.toFixed(2);
-            document.getElementById('total-usd').textContent = totalUSD.toFixed(2);
-        }
-
-        // Confirmar venta
-        function confirmSale() {
-            alert("Venta confirmada!");
-            cart = []; // Limpiar carrito
-            updateCartTable();
-            updateTotal();
-            loadInventory(); // Actualizar inventario
-        }
-
-        // Cambiar moneda
-        function updateCurrency() {
-            currentCurrency = document.getElementById('currency').value;
-            updateTotal();
-        }
-
-        // Ver entradas de inventario
-        function showEntradas() {
-            document.getElementById('inventory-section').style.display = 'none';
-            document.getElementById('inventory-summary').style.display = 'block';
-        }
-
-        // Ver ventas
-        function showVentas() {
-            document.getElementById('inventory-section').style.display = 'none';
-            document.getElementById('sales-summary').style.display = 'block';
-            loadProductSelect();
-        }
-
-        // Mostrar inventario
-        function showInventory() {
-            loadInventory();
-            document.getElementById('inventory-section').style.display = 'block';
-        }
-
-        // Acceder a ventas (Contraseña)
-        function checkPassword() {
-            if (document.getElementById('password').value === "123456") {
-                document.getElementById('password-container').style.display = 'none';
-                showVentas();
-            } else {
-                alert("Contraseña incorrecta.");
-            }
-        }
-
-        // Acceder a entradas (Contraseña)
-        function checkEntradasPassword() {
-            if (document.getElementById('entradas-password').value === "010919") {
-                document.getElementById('entradas-password-container').style.display = 'none';
-                showEntradas();
-            } else {
-                alert("Contraseña incorrecta.");
-            }
-        }
-
-        // Agregar entradas
-        function addEntrance() {
-            const selectedProduct = document.getElementById('product-select-entrance').value;
-            const quantity = parseInt(document.getElementById('quantity-entrance').value);
-
-            if (selectedProduct && quantity) {
-                inventory[selectedProduct].stock += quantity;
-                loadInventory();
-                alert("Entrada registrada.");
-            } else {
-                alert("Por favor ingresa una cantidad válida.");
-            }
-        }
-
-        // Confirmar entrada
-        function confirmEntrance() {
-            addEntrance();
-            document.getElementById('inventory-summary').style.display = 'none';
-            showInventory();
-        }
-
-        // Limpiar carrito
-        function clearCart() {
-            cart = [];
-            updateCartTable();
-            updateTotal();
-        }
-
-        // Inicializar
-        loadInventory();
-    </script>
+    <footer>
+        <p>© 2025 Sand Box - Conectando Startups con Oportunidades</p>
+    </footer>
 </body>
 </html>
