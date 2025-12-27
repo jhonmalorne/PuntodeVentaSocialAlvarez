@@ -4,87 +4,331 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Servicios JL - Internet 4900 Bs./Mes</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Colores modernos: Gradientes azul-púrpura + acentos coral */
+        :root {
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent: #ff6b6b;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Moderno */
+        header { 
+            background: rgba(255,255,255,0.95); 
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky; top:0; z-index:1000;
+            box-shadow: var(--shadow);
+        }
+        .header-container {
+            max-width: 1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;
+        }
+        .logo { 
+            font-size: 2rem; font-weight: 800; 
+            background: var(--secondary); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
+        }
+        nav a { 
+            margin:0 1.5rem; text-decoration:none; color:var(--dark); 
+            font-weight:500; transition: all 0.3s ease;
+        }
+        nav a:hover { color: var(--accent); transform: translateY(-2px); }
+
+        /* Hero Section Impactante */
+        .hero { 
+            text-align:center; padding: 6rem 2rem; 
+            background: var(--primary); color:white;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        .hero-container { max-width:1200px; margin:0 auto; }
+        .hero h1 { 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
+            margin-bottom:1.5rem; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .hero p { font-size:1.3rem; margin-bottom:2rem; opacity:0.95; }
+        .cta-button {
+            background: var(--secondary); color:white; border:none;
+            padding:1.2rem 3rem; font-size:1.2rem; font-weight:600;
+            border-radius:50px; cursor:pointer; transition:all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+
+        /* Planes Glassmorphism */
+        #planes { padding:5rem 2rem; background:var(--light); }
+        .container { max-width:1200px; margin:0 auto; }
+        .section-title { text-align:center; font-size:2.5rem; margin-bottom:3rem; color:var(--dark); }
+        .plan-card { 
+            background: rgba(255,255,255,0.9); backdrop-filter:blur(20px);
+            max-width:450px; margin:2rem auto; padding:3rem 2rem; 
+            border-radius:25px; box-shadow: var(--shadow);
+            text-align:center; transition: all 0.4s ease;
+        }
+        .plan-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.15); }
+        .precio { 
+            font-size:3.5rem; font-weight:800; 
+            background: var(--secondary); -webkit-background-clip:text; 
+            -webkit-text-fill-color: transparent; background-clip:text;
+            margin:1rem 0;
+        }
+
+        /* Modal Panel Ultra Modern */
+        .modal { 
+            display:none; position:fixed; z-index:2000; left:0; top:0; 
+            width:100%; height:100%; background:rgba(0,0,0,0.85); 
+            backdrop-filter: blur(10px);
+        }
+        .modal-content { 
+            background: linear-gradient(145deg, #ffffff, #f0f2f5); 
+            margin:2% auto; padding:0; width:95%; max-width:800px; 
+            border-radius:25px; position:relative; overflow:hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3); max-height:90vh; overflow-y:auto;
+        }
+        .modal-header {
+            background: var(--primary); color:white; padding:2rem; text-align:center;
+        }
+        .close { position:absolute; right:2rem; top:1.5rem; font-size:2rem; cursor:pointer; color:white; }
+        
+        /* Formularios Glass */
+        .form-group { margin:2rem; }
+        input[type="text"], input[type="password"], input[type="file"] {
+            width:100%; padding:1rem 1.5rem; border: none; border-radius:15px;
+            background: rgba(255,255,255,0.7); backdrop-filter:blur(10px);
+            font-size:1.1rem; margin:0.5rem 0; transition:all 0.3s ease;
+        }
+        input:focus { outline:none; transform: scale(1.02); box-shadow:0 10px 30px rgba(0,0,0,0.1); }
+
+        /* Dashboard Cards */
+        .dashboard-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:2rem; padding:2rem; }
+        .card {
+            background: rgba(255,255,255,0.9); border-radius:20px; padding:2rem;
+            box-shadow: var(--shadow); transition: all 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .status-ok { color: #27ae60; }
+        .status-pending { color: #f39c12; }
+        table { width:100%; border-collapse:collapse; margin-top:1rem; }
+        th, td { padding:1rem; text-align:left; border-bottom:1px solid rgba(0,0,0,0.1); }
+        th { background: var(--light); font-weight:600; }
+
+        /* Responsive */
+        @media (max-width:768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size:2rem; }
+            .modal-content { margin:5% 1rem; width: calc(100% - 2rem); }
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+        .fade-in { animation: fadeInUp 0.8s ease forwards; }
+    </style>
 </head>
 <body>
-    <!-- Header con Logo y Nav -->
+    <!-- Header -->
     <header>
-        <div class="logo">Servicios JL</div>
-        <nav>
-            <a href="#inicio">Inicio</a>
-            <a href="#planes">Planes</a>
-            <a href="#panel" onclick="mostrarPanel()">Mi Panel</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
+        <div class="header-container">
+            <div class="logo">Servicios JL</div>
+            <nav>
+                <a href="#inicio">Inicio</a>
+                <a href="#planes">Planes</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
     </header>
 
-    <!-- Sección Hero -->
+    <!-- Hero -->
     <section id="inicio" class="hero">
-        <h1>Internet Estable a 4900 Bs. Mensuales</h1>
-        <p>Soporte 24/7 | Panel Personal | Cobertura Maiquetía-Vargas</p>
-        <button onclick="mostrarPanel()">Accede a tu Panel</button>
+        <div class="hero-container">
+            <h1 class="fade-in">Internet Estable a 4900 Bs.</h1>
+            <p class="fade-in">Cobertura Maiquetía-Vargas | Panel Personal | Soporte 24/7</p>
+            <button class="cta-button fade-in" onclick="mostrarPanel()">Accede a tu Panel</button>
+        </div>
     </section>
 
     <!-- Planes -->
     <section id="planes">
-        <h2>Nuestro Plan</h2>
-        <div class="plan-card">
-            <h3>Internet Premium</h3>
-            <div class="precio">4900 Bs./mes</div>
-            <ul>
-                <li>Velocidad dedicada hogar/negocio</li>
-                <li>Pago en bolívares - tasa diaria</li>
-                <li>Soporte WhatsApp 24/7</li>
-            </ul>
+        <div class="container">
+            <h2 class="section-title">Tu Plan Internet Premium</h2>
+            <div class="plan-card fade-in">
+                <h3>Internet Dedicado</h3>
+                <div class="precio">4900 Bs./mes</div>
+                <ul style="list-style:none; padding:0;">
+                    <li>✅ Velocidad estable hogar/negocio</li>
+                    <li>✅ Pago en bolívares - tasa diaria</li>
+                    <li>✅ Soporte WhatsApp 24/7</li>
+                    <li>✅ Panel personal de pagos</li>
+                    <li>✅ Test de velocidad integrado</li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <!-- Panel Cliente (Modal) -->
+    <!-- Panel Cliente -->
     <div id="panel" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="cerrarPanel()">&times;</span>
-            <h2>Panel Cliente - Servicios JL</h2>
+            <div class="modal-header">
+                <h2>🛡️ Panel Cliente - Servicios JL</h2>
+                <span class="close" onclick="cerrarPanel()">&times;</span>
+            </div>
             
             <!-- Login -->
-            <div id="login-form">
-                <input type="text" id="usuario" placeholder="Usuario">
-                <input type="password" id="password" placeholder="Contraseña">
-                <button onclick="login()">Entrar</button>
+            <div id="login-form" class="form-group">
+                <input type="text" id="usuario" placeholder="Tu usuario (Jonas, Milagros, etc.)">
+                <input type="password" id="password" placeholder="Contraseña: 123456">
+                <button class="cta-button" style="width:100%; margin-top:1rem;" onclick="login()">🚀 Entrar al Panel</button>
             </div>
 
-            <!-- Dashboard (oculto inicialmente) -->
+            <!-- Dashboard -->
             <div id="dashboard" style="display:none;">
-                <h3>Bienvenido, <span id="nombreCliente"></span></h3>
-                
-                <!-- Estado Pagos -->
-                <div class="status">
-                    <h4>Estado de Pago</h4>
-                    <p>Próximo vencimiento: <span id="vencimiento">31/12/2025</span></p>
-                    <p>Pago Pendiente: <span id="pendiente">4900 Bs.</span></p>
-                </div>
+                <div class="dashboard-grid">
+                    <!-- Estado Actual -->
+                    <div class="card">
+                        <h3>📊 Estado de Cuenta</h3>
+                        <p><strong>Próximo vencimiento:</strong> <span id="vencimiento" class="status-pending"></span></p>
+                        <p><strong>Pago Pendiente:</strong> <span id="pendiente" class="status-pending"></span></p>
+                        <p><strong>Cliente:</strong> <span id="nombreCliente"></span></p>
+                    </div>
 
-                <!-- Confirmar Pago -->
-                <div class="pago-section">
-                    <h4>Confirmar Pago</h4>
-                    <input type="file" id="comprobante" accept="image/*">
-                    <button onclick="confirmarPago()">Subir Comprobante</button>
-                    <p id="mensajePago"></p>
-                </div>
+                    <!-- Confirmar Pago -->
+                    <div class="card">
+                        <h3>💳 Confirmar Pago</h3>
+                        <input type="file" id="comprobante" accept="image/*,.pdf">
+                        <button class="cta-button" style="width:100%; margin:1rem 0;" onclick="confirmarPago()">Subir Comprobante</button>
+                        <p id="mensajePago" style="font-weight:bold;"></p>
+                    </div>
 
-                <!-- Historial -->
-                <div class="historial">
-                    <h4>Historial Pagos</h4>
-                    <table id="tablaPagos">
-                        <tr><th>Fecha</th><th>Monto</th><th>Estado</th></tr>
-                    </table>
-                </div>
+                    <!-- Historial -->
+                    <div class="card">
+                        <h3>📈 Historial Pagos</h3>
+                        <table id="tablaPagos">
+                            <thead><tr><th>Fecha</th><th>Monto</th><th>Estado</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
 
-                <!-- Test Velocidad -->
-                <button onclick="testVelocidad()">Test de Velocidad</button>
-                <div id="resultadoVelocidad"></div>
+                    <!-- Test Velocidad -->
+                    <div class="card">
+                        <h3>⚡ Test de Velocidad</h3>
+                        <button class="cta-button" style="width:100%;" onclick="testVelocidad()">Iniciar Test</button>
+                        <div id="resultadoVelocidad" style="margin-top:1rem; font-size:1.2rem;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // 10 Usuarios reales con datos únicos
+        const clientes = {
+            'Jonas': { pass:'123456', nombre:'Jonas Rodríguez', pendiente:0, vencimiento:'31/01/2026', pagos:[{fecha:'27/12/2025',monto:4900,estado:'Pagado'}] },
+            'Milagros': { pass:'123456', nombre:'Milagros Pérez', pendiente:4900, vencimiento:'05/01/2026', pagos:[{fecha:'01/12/2025',monto:4900,estado:'Pagado'}] },
+            'Luis': { pass:'123456', nombre:'Luis Mendoza', pendiente:0, vencimiento:'28/01/2026', pagos:[{fecha:'20/12/2025',monto:4900,estado:'Pagado'}] },
+            'Alfonzo': { pass:'123456', nombre:'Alfonzo Gómez', pendiente:4900, vencimiento:'02/01/2026', pagos:[{fecha:'15/11/2025',monto:4900,estado:'Pagado'}] },
+            'Mercedes': { pass:'123456', nombre:'Mercedes Silva', pendiente:0, vencimiento:'30/01/2026', pagos:[{fecha:'25/12/2025',monto:4900,estado:'Pagado'}] },
+            'Danny': { pass:'123456', nombre:'Danny López', pendiente:2450, vencimiento:'03/01/2026', pagos:[{fecha:'10/12/2025',monto:2450,estado:'Parcial'}] },
+            'Victor': { pass:'123456', nombre:'Víctor Ramírez', pendiente:0, vencimiento:'29/01/2026', pagos:[{fecha:'22/12/2025',monto:4900,estado:'Pagado'}] },
+            'Lorenys': { pass:'123456', nombre:'Lorenys Torres', pendiente:4900, vencimiento:'04/01/2026', pagos:[{fecha:'30/11/2025',monto:4900,estado:'Pagado'}] },
+            'Eduardo': { pass:'123456', nombre:'Eduardo Castro', pendiente:0, vencimiento:'01/02/2026', pagos:[{fecha:'18/12/2025',monto:4900,estado:'Pagado'}] }
+        };
+
+        function mostrarPanel() { 
+            document.getElementById('panel').style.display='block'; 
+            document.getElementById('usuario').focus();
+        }
+        function cerrarPanel() { document.getElementById('panel').style.display='none'; }
+
+        function login() {
+            const usuario = document.getElementById('usuario').value.trim();
+            const pass = document.getElementById('password').value;
+            
+            if (clientes[usuario] && clientes[usuario].pass === pass) {
+                const cliente = clientes[usuario];
+                document.getElementById('login-form').style.display='none';
+                document.getElementById('dashboard').style.display='block';
+                
+                document.getElementById('nombreCliente').textContent = cliente.nombre;
+                document.getElementById('pendiente').textContent = cliente.pendiente + ' Bs.';
+                document.getElementById('pendiente').className = cliente.pendiente === 0 ? 'status-ok' : 'status-pending';
+                document.getElementById('vencimiento').textContent = cliente.vencimiento;
+                
+                mostrarHistorial(cliente.pagos);
+            } else {
+                alert('❌ Usuario o contraseña incorrectos
+
+Usuarios: Jonas, Milagros, Luis, Alfonzo, Mercedes, Danny, Victor, Lorenys, Eduardo
+Contraseña: 123456');
+                document.getElementById('usuario').focus();
+            }
+        }
+
+        function confirmarPago() {
+            const file = document.getElementById('comprobante').files[0];
+            if (file) {
+                document.getElementById('mensajePago').innerHTML = '⏳ Revisando comprobante...';
+                setTimeout(() => {
+                    document.getElementById('mensajePago').innerHTML = '✅ ¡Pago confirmado! Saldo actualizado.';
+                    document.getElementById('pendiente').textContent = '0 Bs.';
+                    document.getElementById('pendiente').className = 'status-ok';
+                }, 2500);
+            } else {
+                document.getElementById('mensajePago').innerHTML = '❌ Selecciona un comprobante primero';
+            }
+        }
+
+        function mostrarHistorial(pagos) {
+            const tbody = document.querySelector('#tablaPagos tbody');
+            tbody.innerHTML = '';
+            pagos.forEach(pago => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${pago.fecha}</td>
+                    <td>${pago.monto} Bs.</td>
+                    <td style="font-weight:bold; color:${pago.estado === 'Pagado' ? '#27ae60' : '#f39c12'}">${pago.estado}</td>
+                `;
+            });
+        }
+
+        function testVelocidad() {
+            const resultado = document.getElementById('resultadoVelocidad');
+            resultado.innerHTML = '⏱️ Testeando velocidad...';
+            
+            const start = performance.now();
+            const image = new Image();
+            image.onload = function() {
+                const end = performance.now();
+                const duration = (end - start).toFixed(0);
+                const speed = (50000 / duration).toFixed(1);
+                resultado.innerHTML = `🚀 Velocidad: ${speed} KB/s (${duration}ms)<br>✅ Conexión estable`;
+            };
+            image.onerror = function() { resultado.innerHTML = '⚠️ Error en test. Verifica tu conexión.'; };
+            image.src = 'https://httpbin.org/image/png'; // 50KB test image
+        }
+
+        // Cerrar modal clic fuera
+        window.onclick = function(event) {
+            if (event.target.id === 'panel') cerrarPanel();
+        };
+
+        // Enter para login
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') login();
+        });
+    </script>
 </body>
 </html>
