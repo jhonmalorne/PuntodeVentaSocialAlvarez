@@ -44,7 +44,7 @@
         nav a { 
             margin:0 1rem; text-decoration:none; color:var(--dark); 
             font-weight:500; padding: 0.5rem 1rem; border-radius: 20px;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease; cursor: pointer;
         }
         nav a:hover { background: rgba(255,107,107,0.1); color: var(--accent); }
 
@@ -140,9 +140,10 @@
         <div class="header-container">
             <div class="logo">Servicios JL</div>
             <nav>
+                <a onclick="mostrarPanel()">Mi Panel</a>
                 <a href="#inicio">Inicio</a>
                 <a href="#planes">Planes</a>
-                <a href="#contacto">Contacto</a>
+                <a href="https://wa.me/584244525765" target="_blank">WhatsApp</a>
             </nav>
         </div>
     </header>
@@ -151,7 +152,7 @@
         <div class="hero-container">
             <h1>Internet Estable a 4900 Bs.</h1>
             <p>Panel Personal | Soporte 24/7 WhatsApp | Maiquetía-Vargas</p>
-            <button class="cta-button" onclick="mostrarPanel()">🔐 Accede a tu Panel</button>
+            <button class="cta-button" onclick="mostrarPanel()">🔐 ACCEDE A TU PANEL</button>
             <br>
             <a href="https://wa.me/584244525765" class="whatsapp-btn" target="_blank">
                 📱 WhatsApp: 0424-4525765
@@ -171,6 +172,7 @@
                     <li>✅ Ciclo facturación claro</li>
                     <li>✅ Soporte WhatsApp instantáneo</li>
                 </ul>
+                <button class="cta-button" onclick="mostrarPanel()">🔐 Mi Panel</button>
                 <a href="https://wa.me/584244525765" class="whatsapp-btn" target="_blank">Contratar Ahora</a>
             </div>
         </div>
@@ -239,6 +241,20 @@
     </div>
 
     <script>
+        // FUNCIÓN CORREGIDA - SE EJECUTA AL INSTANTE
+        function mostrarPanel() {
+            console.log("🟢 Botón PANEL presionado - Abrriendo modal...");
+            const panel = document.getElementById('panel');
+            panel.style.display = 'block';
+            document.getElementById('usuario').focus();
+            document.getElementById('usuario').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function cerrarPanel() {
+            document.getElementById('panel').style.display = 'none';
+        }
+
         // Usuarios con ciclo de facturación real (10 clientes)
         const clientes = {
             'Jonas': { 
@@ -297,23 +313,15 @@
             }
         };
 
-        // Funciones optimizadas (carga instantánea)
-        function mostrarPanel() { 
-            document.getElementById('panel').style.display='block'; 
-            document.getElementById('usuario').focus(); 
-        }
-        function cerrarPanel() { document.getElementById('panel').style.display='none'; }
-
         function login() {
             const usuario = document.getElementById('usuario').value.trim();
             const pass = document.getElementById('password').value;
             
             if (clientes[usuario] && clientes[usuario].pass === pass) {
                 const cliente = clientes[usuario];
-                document.getElementById('login-form').style.display='none';
-                document.getElementById('dashboard').style.display='block';
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
                 
-                // Actualizar datos
                 document.getElementById('nombreCliente').textContent = cliente.nombre;
                 document.getElementById('mesActual').textContent = cliente.mesActual;
                 document.getElementById('vencimiento').textContent = cliente.vencimiento;
@@ -373,7 +381,7 @@ Contraseña: 123456');
             testImg.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==';
         }
 
-        // Controles teclado y eventos
+        // Controles teclado
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && document.getElementById('panel').style.display === 'block') {
                 login();
