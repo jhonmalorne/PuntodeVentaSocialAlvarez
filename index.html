@@ -3,95 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sand Box - Incubadora de Startups</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #ff6f61, #fddb3a);
-            color: #333;
-        }
-        header {
-            text-align: center;
-            padding: 20px;
-            background-color: #222;
-            color: white;
-        }
-        h1 {
-            margin: 0;
-        }
-        section {
-            padding: 20px;
-            margin: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        .project, .comment-box {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        button {
-            padding: 10px;
-            background: #ff6f61;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover {
-            background: #d94e3f;
-        }
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #222;
-            color: white;
-        }
-    </style>
+    <title>Servicios JL - Internet 4900 Bs./Mes</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header con Logo y Nav -->
     <header>
-        <h1>Sand Box</h1>
-        <p>Impulsamos startups en Venezuela con oportunidades de inversión.</p>
+        <div class="logo">Servicios JL</div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#planes">Planes</a>
+            <a href="#panel" onclick="mostrarPanel()">Mi Panel</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
     </header>
 
-    <section id="projects">
-        <h2>Proyectos Postulantes</h2>
-        <div class="project">
-            <h3>Startup 1</h3>
-            <p>Descripción breve del proyecto.</p>
-            <span>Inversión requerida: $10,000</span>
-            <button>Ver detalles</button>
-        </div>
-        <div class="project">
-            <h3>Startup 2</h3>
-            <p>Innovación en tecnología financiera.</p>
-            <span>Inversión requerida: $20,000</span>
-            <button>Ver detalles</button>
+    <!-- Sección Hero -->
+    <section id="inicio" class="hero">
+        <h1>Internet Estable a 4900 Bs. Mensuales</h1>
+        <p>Soporte 24/7 | Panel Personal | Cobertura Maiquetía-Vargas</p>
+        <button onclick="mostrarPanel()">Accede a tu Panel</button>
+    </section>
+
+    <!-- Planes -->
+    <section id="planes">
+        <h2>Nuestro Plan</h2>
+        <div class="plan-card">
+            <h3>Internet Premium</h3>
+            <div class="precio">4900 Bs./mes</div>
+            <ul>
+                <li>Velocidad dedicada hogar/negocio</li>
+                <li>Pago en bolívares - tasa diaria</li>
+                <li>Soporte WhatsApp 24/7</li>
+            </ul>
         </div>
     </section>
 
-    <section id="comments">
-        <h2>Comentarios</h2>
-        <textarea placeholder="Escribe tu comentario..."></textarea>
-        <button>Enviar</button>
-        <div class="comment-box">
-            <p><strong>Usuario 1:</strong> ¡Gran iniciativa!</p>
-        </div>
-        <div class="comment-box">
-            <p><strong>Usuario 2:</strong> Me interesa invertir, ¿cómo puedo hacerlo?</p>
-        </div>
-    </section>
+    <!-- Panel Cliente (Modal) -->
+    <div id="panel" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarPanel()">&times;</span>
+            <h2>Panel Cliente - Servicios JL</h2>
+            
+            <!-- Login -->
+            <div id="login-form">
+                <input type="text" id="usuario" placeholder="Usuario">
+                <input type="password" id="password" placeholder="Contraseña">
+                <button onclick="login()">Entrar</button>
+            </div>
 
-    <footer>
-        <p>© 2025 Sand Box - Conectando Startups con Oportunidades</p>
-    </footer>
+            <!-- Dashboard (oculto inicialmente) -->
+            <div id="dashboard" style="display:none;">
+                <h3>Bienvenido, <span id="nombreCliente"></span></h3>
+                
+                <!-- Estado Pagos -->
+                <div class="status">
+                    <h4>Estado de Pago</h4>
+                    <p>Próximo vencimiento: <span id="vencimiento">31/12/2025</span></p>
+                    <p>Pago Pendiente: <span id="pendiente">4900 Bs.</span></p>
+                </div>
+
+                <!-- Confirmar Pago -->
+                <div class="pago-section">
+                    <h4>Confirmar Pago</h4>
+                    <input type="file" id="comprobante" accept="image/*">
+                    <button onclick="confirmarPago()">Subir Comprobante</button>
+                    <p id="mensajePago"></p>
+                </div>
+
+                <!-- Historial -->
+                <div class="historial">
+                    <h4>Historial Pagos</h4>
+                    <table id="tablaPagos">
+                        <tr><th>Fecha</th><th>Monto</th><th>Estado</th></tr>
+                    </table>
+                </div>
+
+                <!-- Test Velocidad -->
+                <button onclick="testVelocidad()">Test de Velocidad</button>
+                <div id="resultadoVelocidad"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
