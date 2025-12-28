@@ -3,397 +3,457 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios JL - Internet 4900 Bs./Mes</title>
+    <title>Nexus.net - Marketing Digital & Servicios Integrales | Carabobo</title>
+    <meta name="description" content="Diseños web profesionales, internet de alta velocidad por solo 4900 Bs, computadoras, trámites y más. ¡Cotiza ahora por WhatsApp!">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent: #ff6b6b;
-            --dark: #2c3e50;
-            --light: #f8f9fa;
-            --white: #ffffff;
-            --shadow: 0 10px 30px rgba(0,0,0,0.1);
-            --success: #27ae60;
-            --warning: #f39c12;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { 
-            font-family: system-ui, -apple-system, sans-serif;
-            background: var(--primary);
-            color: var(--dark);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
+            color: #ffffff;
+            overflow-x: hidden;
         }
 
-        header { 
-            background: rgba(255,255,255,0.95); 
-            padding: 1rem 2rem;
-            position: sticky; top:0; z-index:100;
-            box-shadow: var(--shadow);
+        /* Gradiente de fondo animado */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0c0c0c, #1a0033, #0f0f23, #2d1b69);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -2;
         }
-        .header-container {
-            max-width: 1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center;
-        }
-        .logo { 
-            font-size: 1.8rem; font-weight: 800; 
-            background: var(--secondary); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            background-clip: text;
-        }
-        nav a { 
-            margin:0 1rem; text-decoration:none; color:var(--dark); 
-            font-weight:500; padding: 0.5rem 1rem; border-radius: 20px;
-            transition: all 0.2s ease; cursor: pointer;
-        }
-        nav a:hover { background: rgba(255,107,107,0.1); color: var(--accent); }
 
-        .hero { 
-            text-align:center; padding: 4rem 2rem; 
-            color:white; position: relative;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .hero-container { max-width:1200px; margin:0 auto; }
-        .hero h1 { 
-            font-size: clamp(2rem, 4vw, 3rem); 
-            margin-bottom:1rem; 
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(12, 12, 12, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
         }
-        .hero p { font-size:1.2rem; margin-bottom:2rem; }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
         .cta-button {
-            background: var(--secondary); color:white; border:none;
-            padding:1rem 2.5rem; font-size:1.1rem; font-weight:600;
-            border-radius:50px; cursor:pointer; transition:all 0.2s ease;
-            box-shadow: var(--shadow);
-            margin: 0.5rem;
-        }
-        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-
-        #planes { padding:4rem 2rem; background:var(--light); }
-        .container { max-width:1200px; margin:0 auto; }
-        .section-title { text-align:center; font-size:2rem; margin-bottom:2rem; color:var(--dark); }
-        .plan-card { 
-            background: rgba(255,255,255,0.95); 
-            max-width:450px; margin:2rem auto; padding:2.5rem; 
-            border-radius:20px; box-shadow: var(--shadow);
-            text-align:center;
-        }
-        .precio { 
-            font-size:3rem; font-weight:800; 
-            background: var(--secondary); -webkit-background-clip:text; 
-            -webkit-text-fill-color: transparent; background-clip:text;
-            margin:1rem 0;
+            background: linear-gradient(45deg, #ff00ff, #00d4ff);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        /* Modal Optimizado */
-        .modal { 
-            display:none; position:fixed; z-index:2000; left:0; top:0; 
-            width:100%; height:100%; background:rgba(0,0,0,0.8); 
-        }
-        .modal-content { 
-            background: #fff; margin:5% auto; padding:0; width:95%; max-width:700px; 
-            border-radius:20px; position:relative; max-height:85vh; overflow-y:auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .modal-header {
-            background: var(--primary); color:white; padding:1.5rem 2rem; text-align:center;
-            border-radius:20px 20px 0 0;
-        }
-        .close { 
-            position:absolute; right:1rem; top:1rem; font-size:2rem; cursor:pointer; 
-            color:#fff; background:none; border:none; width:40px; height:40px;
-        }
-        
-        .form-group { padding:2rem; }
-        input[type="text"], input[type="password"], input[type="file"] {
-            width:100%; padding:1rem; border: 2px solid #e9ecef; border-radius:12px;
-            font-size:1rem; margin:0.5rem 0; transition:all 0.2s ease;
-            background: #fff;
-        }
-        input:focus { outline:none; border-color: var(--accent); box-shadow:0 0 0 3px rgba(255,107,107,0.1); }
-
-        .dashboard-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; padding:1.5rem; }
-        .card {
-            background: #fff; border-radius:15px; padding:1.5rem;
-            box-shadow: var(--shadow); border:1px solid #f0f0f0;
-        }
-        .status-ok { color: var(--success); font-weight:bold; }
-        .status-pending { color: var(--warning); font-weight:bold; }
-        table { width:100%; border-collapse:collapse; margin-top:1rem; font-size:0.9rem; }
-        th, td { padding:0.8rem 0.5rem; text-align:left; border-bottom:1px solid #eee; }
-        th { background: #f8f9fa; font-weight:600; }
-
-        .whatsapp-btn {
-            background: #25D366; color:white; border:none;
-            padding:1rem 2rem; font-size:1.1rem; border-radius:50px;
-            display:inline-flex; align-items:center; gap:0.5rem;
-            text-decoration:none; font-weight:600; margin:1rem 0;
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
         }
 
-        @media (max-width:768px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .hero { padding:3rem 1rem; }
-            .form-group { padding:1.5rem; }
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #00d4ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px #00d4ff); }
+            to { filter: drop-shadow(0 0 30px #ff00ff); }
+        }
+
+        .price-tag {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            display: inline-block;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .whatsapp-cta {
+            background: #25D366;
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Servicios Section */
+        .servicios {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .servicio-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .servicio-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Contacto */
+        .contacto {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 5rem 2rem;
+            border-radius: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #00d4ff;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .servicios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.2);
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="header-container">
-            <div class="logo">Servicios JL</div>
-            <nav>
-                <a onclick="mostrarPanel()">Mi Panel</a>
-                <a href="#inicio">Inicio</a>
-                <a href="#planes">Planes</a>
-                <a href="https://wa.me/584244525765" target="_blank">WhatsApp</a>
-            </nav>
-        </div>
+        <nav>
+            <a href="#" class="logo">NEXUS.net</a>
+            <ul class="nav-links">
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="tel:+584244525765">Llamar</a></li>
+            </ul>
+            <a href="https://wa.me/584244525765?text=¡Hola!%20Quiero%20cotizar%20servicios%20de%20Nexus.net" class="cta-button">
+                <i class="fab fa-whatsapp"></i> Cotizar Ahora
+            </a>
+        </nav>
     </header>
 
-    <section id="inicio" class="hero">
-        <div class="hero-container">
-            <h1>Internet Estable a 4900 Bs.</h1>
-            <p>Panel Personal | Soporte 24/7 WhatsApp | Maiquetía-Vargas</p>
-            <button class="cta-button" onclick="mostrarPanel()">🔐 ACCEDE A TU PANEL</button>
-            <br>
-            <a href="https://wa.me/584244525765" class="whatsapp-btn" target="_blank">
-                📱 WhatsApp: 0424-4525765
+    <!-- Hero Section - Internet 4900 Bs -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🚀 INTERNET ULTRA RÁPIDO</h1>
+            <div class="price-tag">SOLO 4.900 Bs</div>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem;">Servicio de Internet de alta velocidad + Diseños Web Profesionales</p>
+            <a href="https://wa.me/584244525765?text=¡Hola!%20Quiero%20el%20paquete%20de%20Internet%20por%204900Bs" class="whatsapp-cta">
+                <i class="fab fa-whatsapp"></i> ¡COTIZAR AHORA!
             </a>
         </div>
     </section>
 
-    <section id="planes">
-        <div class="container">
-            <h2 class="section-title">Plan Internet Premium</h2>
-            <div class="plan-card">
-                <h3>Internet Dedicado</h3>
-                <div class="precio">4900 Bs./mes</div>
-                <ul style="list-style:none; padding:1rem 0;">
-                    <li>✅ Velocidad estable 24/7</li>
-                    <li>✅ Panel de pagos personal</li>
-                    <li>✅ Ciclo facturación claro</li>
-                    <li>✅ Soporte WhatsApp instantáneo</li>
-                </ul>
-                <button class="cta-button" onclick="mostrarPanel()">🔐 Mi Panel</button>
-                <a href="https://wa.me/584244525765" class="whatsapp-btn" target="_blank">Contratar Ahora</a>
+    <!-- Servicios -->
+    <section id="servicios" class="servicios">
+        <h2 class="section-title">TODOS NUESTROS SERVICIOS</h2>
+        <div class="servicios-grid">
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <h3>Computadoras & Hardware</h3>
+                <p>Equipos nuevos y usados, ensamblaje profesional y repuestos de calidad.</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Software & Programas</h3>
+                <p>Licencias originales, instalación y soporte técnico especializado.</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Diseños Web</h3>
+                <p>Páginas web modernas y responsive para tu negocio. ¡Como esta!</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <h3>Trámites Oficiales</h3>
+                <p>SAREN • SAIME • INT • SENIAT • Seguros RCV todos los vehículos</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Asesoría Proyectos</h3>
+                <p>Apoyo profesional para nuevos emprendimientos y negocios.</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Educación & Tareas</h3>
+                <p>Trabajos escolares, informes, maquetas y tareas dirigidas (2h/día, 4 días/semana)</p>
             </div>
         </div>
     </section>
 
-    <div id="panel" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>🛡️ Panel Cliente Servicios JL</h2>
-                <button class="close" onclick="cerrarPanel()">&times;</button>
+    <!-- Contacto -->
+    <section id="contacto" class="contacto">
+        <h2 style="font-size: 2rem; margin-bottom: 2rem;">📍 CONTÁCTANOS</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <strong>Dirección:</strong><br>
+                    Estado Carabobo, Municipio Los Guayos
+                </div>
             </div>
-            
-            <div id="login-form" class="form-group">
-                <h3 style="margin-bottom:1rem;">Ingresa tus datos:</h3>
-                <input type="text" id="usuario" placeholder="Usuario (Jonas, Milagros, etc.)" list="usuarios-lista">
-                <datalist id="usuarios-lista">
-                    <option value="Jonas">
-                    <option value="Milagros">
-                    <option value="Luis">
-                    <option value="Alfonzo">
-                    <option value="Mercedes">
-                    <option value="Danny">
-                    <option value="Victor">
-                    <option value="Lorenys">
-                    <option value="Eduardo">
-                </datalist>
-                <input type="password" id="password" placeholder="Contraseña: 123456">
-                <button class="cta-button" style="width:100%; margin-top:1rem;" onclick="login()">🚀 Entrar</button>
-                <p style="font-size:0.9rem; margin-top:1rem; text-align:center;">
-                    Usuarios: Jonas, Milagros, Luis, Alfonzo, Mercedes, Danny, Victor, Lorenys, Eduardo<br>
-                    <strong>Contraseña: 123456</strong>
-                </p>
+            <div class="contact-item">
+                <i class="fab fa-whatsapp"></i>
+                <div>
+                    <strong>WhatsApp:</strong><br>
+                    <a href="https://wa.me/584244525765" style="color: #00d4ff;">0424-452-5765</a>
+                </div>
             </div>
-
-            <div id="dashboard" style="display:none;">
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <h3>📊 Estado de Cuenta</h3>
-                        <p><strong>Cliente:</strong> <span id="nombreCliente"></span></p>
-                        <p><strong>Mes actual:</strong> <span id="mesActual"></span></p>
-                        <p><strong>Próximo vencimiento:</strong> <span id="vencimiento"></span></p>
-                        <p><strong>Pago Pendiente:</strong> <span id="pendiente"></span></p>
-                        <p><strong>Status:</strong> <span id="statusCuenta"></span></p>
-                    </div>
-
-                    <div class="card">
-                        <h3>💳 Confirmar Pago</h3>
-                        <input type="file" id="comprobante" accept="image/*,.pdf">
-                        <button class="cta-button" style="width:100%; margin:1rem 0;" onclick="confirmarPago()">Subir Comprobante</button>
-                        <p id="mensajePago"></p>
-                    </div>
-
-                    <div class="card">
-                        <h3>📅 Ciclo Facturación</h3>
-                        <div id="cicloFacturacion"></div>
-                    </div>
-
-                    <div class="card">
-                        <h3>⚡ Test Velocidad</h3>
-                        <button class="cta-button" style="width:100%;" onclick="testVelocidad()">Iniciar Test</button>
-                        <div id="resultadoVelocidad" style="margin-top:1rem;"></div>
-                    </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <strong>Email:</strong><br>
+                    jhoncuenta2@gmail.com
                 </div>
             </div>
         </div>
-    </div>
+        <div style="margin-top: 2rem;">
+            <a href="https://wa.me/584244525765?text=¡Hola!%20Me%20interesa%20cotizar%20con%20Nexus.net" class="whatsapp-cta" style="font-size: 1.1rem;">
+                <i class="fab fa-whatsapp"></i> COTIZAR POR WHATSAPP
+            </a>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/584244525765?text=¡Hola!%20Quiero%20cotizar%20servicios%20de%20Nexus.net" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Nexus.net - Todos los derechos reservados | Estado Carabobo - Los Guayos</p>
+    </footer>
 
     <script>
-        // FUNCIÓN CORREGIDA - SE EJECUTA AL INSTANTE
-        function mostrarPanel() {
-            console.log("🟢 Botón PANEL presionado - Abrriendo modal...");
-            const panel = document.getElementById('panel');
-            panel.style.display = 'block';
-            document.getElementById('usuario').focus();
-            document.getElementById('usuario').value = '';
-            document.getElementById('password').value = '';
-        }
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-        function cerrarPanel() {
-            document.getElementById('panel').style.display = 'none';
-        }
-
-        // Usuarios con ciclo de facturación real (10 clientes)
-        const clientes = {
-            'Jonas': { 
-                pass:'123456', nombre:'Jonas Rodríguez', 
-                mesActual:'Enero 2026', pendiente:0, vencimiento:'31/01/2026',
-                status:'Al día ✅', mesesPagados:['Dic 2025','Ene 2026'], mesesPorPagar:[],
-                pagos:[{fecha:'27/12/2025',monto:4900,estado:'Pagado'}]
-            },
-            'Milagros': { 
-                pass:'123456', nombre:'Milagros Pérez', 
-                mesActual:'Enero 2026', pendiente:4900, vencimiento:'05/01/2026',
-                status:'Pendiente ⚠️', mesesPagados:['Nov 2025'], mesesPorPagar:['Dic 2025','Ene 2026'],
-                pagos:[{fecha:'01/11/2025',monto:4900,estado:'Pagado'}]
-            },
-            'Luis': { 
-                pass:'123456', nombre:'Luis Mendoza', 
-                mesActual:'Enero 2026', pendiente:0, vencimiento:'28/01/2026',
-                status:'Al día ✅', mesesPagados:['Nov 2025','Dic 2025','Ene 2026'], mesesPorPagar:[],
-                pagos:[{fecha:'20/12/2025',monto:4900,estado:'Pagado'}]
-            },
-            'Alfonzo': { 
-                pass:'123456', nombre:'Alfonzo Gómez', 
-                mesActual:'Enero 2026', pendiente:4900, vencimiento:'02/01/2026',
-                status:'Pendiente ⚠️', mesesPagados:['Oct 2025'], mesesPorPagar:['Nov 2025','Dic 2025'],
-                pagos:[{fecha:'15/10/2025',monto:4900,estado:'Pagado'}]
-            },
-            'Mercedes': { 
-                pass:'123456', nombre:'Mercedes Silva', 
-                mesActual:'Enero 2026', pendiente:0, vencimiento:'30/01/2026',
-                status:'Al día ✅', mesesPagados:['Dic 2025','Ene 2026'], mesesPorPagar:[],
-                pagos:[{fecha:'25/12/2025',monto:4900,estado:'Pagado'}]
-            },
-            'Danny': { 
-                pass:'123456', nombre:'Danny López', 
-                mesActual:'Enero 2026', pendiente:2450, vencimiento:'03/01/2026',
-                status:'Parcial ⚠️', mesesPagados:['Dic 2025 (parcial)'], mesesPorPagar:['Ene 2026'],
-                pagos:[{fecha:'10/12/2025',monto:2450,estado:'Parcial'}]
-            },
-            'Victor': { 
-                pass:'123456', nombre:'Víctor Ramírez', 
-                mesActual:'Enero 2026', pendiente:0, vencimiento:'29/01/2026',
-                status:'Al día ✅', mesesPagados:['Nov 2025','Dic 2025'], mesesPorPagar:['Ene 2026'],
-                pagos:[{fecha:'22/12/2025',monto:4900,estado:'Pagado'}]
-            },
-            'Lorenys': { 
-                pass:'123456', nombre:'Lorenys Torres', 
-                mesActual:'Enero 2026', pendiente:4900, vencimiento:'04/01/2026',
-                status:'Pendiente ⚠️', mesesPagados:['Oct 2025'], mesesPorPagar:['Nov 2025','Dic 2025'],
-                pagos:[{fecha:'30/10/2025',monto:4900,estado:'Pagado'}]
-            },
-            'Eduardo': { 
-                pass:'123456', nombre:'Eduardo Castro', 
-                mesActual:'Enero 2026', pendiente:0, vencimiento:'01/02/2026',
-                status:'Al día ✅', mesesPagados:['Dic 2025','Ene 2026'], mesesPorPagar:[],
-                pagos:[{fecha:'18/12/2025',monto:4900,estado:'Pagado'}]
-            }
-        };
-
-        function login() {
-            const usuario = document.getElementById('usuario').value.trim();
-            const pass = document.getElementById('password').value;
-            
-            if (clientes[usuario] && clientes[usuario].pass === pass) {
-                const cliente = clientes[usuario];
-                document.getElementById('login-form').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                
-                document.getElementById('nombreCliente').textContent = cliente.nombre;
-                document.getElementById('mesActual').textContent = cliente.mesActual;
-                document.getElementById('vencimiento').textContent = cliente.vencimiento;
-                document.getElementById('pendiente').textContent = cliente.pendiente + ' Bs.';
-                document.getElementById('statusCuenta').textContent = cliente.status;
-                
-                mostrarCiclo(cliente);
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(12, 12, 12, 0.98)';
             } else {
-                alert('❌ Error: Usuario o contraseña incorrectos
-
-Usuarios disponibles:
-' + 
-                      Object.keys(clientes).join(', ') + '
-
-Contraseña: 123456');
-                document.getElementById('usuario').value = '';
-                document.getElementById('password').value = '';
-                document.getElementById('usuario').focus();
-            }
-        }
-
-        function mostrarCiclo(cliente) {
-            const cicloDiv = document.getElementById('cicloFacturacion');
-            cicloDiv.innerHTML = `
-                <strong>✅ Meses Pagados:</strong> ${cliente.mesesPagados.join(', ')}<br><br>
-                <strong>⚠️ Meses por Pagar:</strong> ${cliente.mesesPorPagar.length > 0 ? cliente.mesesPorPagar.join(', ') : 'Ninguno (Al día)'}
-            `;
-        }
-
-        function confirmarPago() {
-            const file = document.getElementById('comprobante').files[0];
-            if (file) {
-                document.getElementById('mensajePago').textContent = '⏳ Enviando comprobante...';
-                setTimeout(() => {
-                    document.getElementById('mensajePago').innerHTML = '✅ <strong>Pago CONFIRMADO</strong> - Contacta WhatsApp para validación final';
-                    document.getElementById('pendiente').textContent = '0 Bs.';
-                    document.getElementById('statusCuenta').textContent = 'Al día ✅';
-                }, 1500);
-            } else {
-                document.getElementById('mensajePago').textContent = '❌ Selecciona un archivo primero';
-            }
-        }
-
-        function testVelocidad() {
-            const resultado = document.getElementById('resultadoVelocidad');
-            resultado.textContent = '⏱️ Testeando...';
-            
-            const start = performance.now();
-            const testImg = new Image();
-            testImg.onload = () => {
-                const end = performance.now();
-                const duration = end - start;
-                const speed = (25000 / duration).toFixed(0);
-                resultado.innerHTML = `🚀 ${speed} KB/s - ${duration.toFixed(0)}ms<br>✅ Conexión estable`;
-            };
-            testImg.onerror = () => resultado.textContent = '⚠️ Verifica tu conexión';
-            testImg.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==';
-        }
-
-        // Controles teclado
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && document.getElementById('panel').style.display === 'block') {
-                login();
-            }
-            if (e.key === 'Escape') {
-                cerrarPanel();
+                header.style.background = 'rgba(12, 12, 12, 0.95)';
             }
         });
 
-        window.onclick = (event) => {
-            if (event.target.id === 'panel') cerrarPanel();
-        };
+        // WhatsApp click tracking (para analytics futuros)
+        document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+            link.addEventListener('click', () => {
+                console.log('WhatsApp CTA clicked!');
+                // Aquí puedes agregar Google Analytics o tracking
+            });
+        });
     </script>
 </body>
 </html>
