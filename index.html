@@ -1,608 +1,606 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tareas Dirigidas - Refuerzo Escolar en Valencia</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2c3e50; /* Azul oscuro base del logo */
-            --secondary-color: #3498db; /* Azul medio */
-            --accent-color: #e74c3c; /* Rojo Venezuela */
-            --yellow-accent: #f39c12; /* Amarillo suave */
-            --text-dark: #2c3e50;
-            --text-light: #ecf0f1;
-            --bg-light: #f8f9fa;
-            --white: #ffffff;
-            --shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--text-light);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-        .logo img {
-            height: 50px;
-            margin-right: 0.5rem;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        .nav-links li {
-            margin-left: 2rem;
-        }
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover {
-            color: var(--yellow-accent);
-        }
-        .rate-display {
-            background: rgba(0,0,0,0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        .slider {
-            position: relative;
-            height: 500px;
-            overflow: hidden;
-            margin-top: 80px;
-        }
-        .slides {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-        .slide {
-            min-width: 100%;
-            height: 500px;
-            position: relative;
-        }
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .slider-content {
-            position: absolute;
-            bottom: 20%;
-            left: 5%;
-            color: var(--white);
-            background: rgba(0,0,0,0.6);
-            padding: 2rem;
-            border-radius: 10px;
-        }
-        .btn {
-            display: inline-block;
-            background: var(--accent-color);
-            color: var(--white);
-            padding: 1rem 2rem;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-            font-weight: bold;
-        }
-        .btn:hover {
-            background: #c0392b;
-        }
-        .btn-whatsapp {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #25D366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: var(--shadow);
-            z-index: 1000;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--primary-color);
-            font-size: 2.5rem;
-        }
-        .services-grid, .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .service-card, .gallery-item {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-        .packages {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .package {
-            background: linear-gradient(var(--secondary-color), var(--primary-color));
-            color: var(--text-light);
-            padding: 2rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .faq {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .faq-item {
-            margin-bottom: 1rem;
-            border-bottom: 1px solid #ddd;
-        }
-        .faq-question {
-            background: var(--bg-light);
-            padding: 1rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .faq-answer {
-            padding: 1rem;
-            display: none;
-        }
-        .resources {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        .resource {
-            text-align: center;
-        }
-        .resource a {
-            display: block;
-            padding: 1rem;
-            background: var(--secondary-color);
-            color: var(--text-light);
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: grid;
-            gap: 1rem;
-        }
-        input, textarea {
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .map-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-        }
-        footer {
-            background: var(--primary-color);
-            color: var(--text-light);
-            text-align: center;
-            padding: 2rem;
-        }
-        .credits {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .slider {
-                height: 400px;
-            }
-            .slide {
-                height: 400px;
-            }
-            section {
-                padding: 3rem 1rem;
-            }
-        }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-        .video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .qr-code {
-            text-align: center;
-            margin: 2rem 0;
-        }
-        .qr-code img {
-            width: 150px;
-            height: 150px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas Dirigidas - Refuerzo Escolar en Valencia</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Azul oscuro base del logo */
+            --secondary-color: #3498db; /* Azul medio */
+            --accent-color: #e74c3c; /* Rojo Venezuela */
+            --yellow-accent: #f39c12; /* Amarillo suave */
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 50px;
+            margin-right: 0.5rem;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--yellow-accent);
+        }
+        .rate-display {
+            background: rgba(0,0,0,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .slider {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            height: 500px;
+            position: relative;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .slider-content {
+            position: absolute;
+            bottom: 20%;
+            left: 5%;
+            color: var(--white);
+            background: rgba(0,0,0,0.6);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background: #c0392b;
+        }
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+        .services-grid, .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .service-card, .gallery-item {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .package {
+            background: linear-gradient(var(--secondary-color), var(--primary-color));
+            color: var(--text-light);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .faq {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .faq-question {
+            background: var(--bg-light);
+            padding: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            padding: 1rem;
+            display: none;
+        }
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .resource {
+            text-align: center;
+        }
+        .resource a {
+            display: block;
+            padding: 1rem;
+            background: var(--secondary-color);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1rem;
+        }
+        input, textarea {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .map-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+        }
+        .credits {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .slider {
+                height: 400px;
+            }
+            .slide {
+                height: 400px;
+            }
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .qr-code {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <img src="logo.png" alt="Tareas Dirigidas Logo">
-                Tareas Dirigidas
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#representantes">Representantes</a></li>
-                <li><a href="#clientes">Nuevos Clientes</a></li>
-                <li><a href="#galeria">Galería</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-            <div class="rate-display" id="rate">€: Cargando...</div>
-        </nav>
-    </header>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Tareas Dirigidas Logo">
+                Tareas Dirigidas
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#representantes">Representantes</a></li>
+                <li><a href="#clientes">Nuevos Clientes</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="rate-display" id="rate">€: Cargando...</div>
+        </nav>
+    </header>
 
-    <section id="home" class="slider">
-        <div class="slides">
-            <div class="slide">
-                <img src="fachadalocal.jpg" alt="Fachada del local">
-                <div class="slider-content">
-                    <h1>Refuerza la educación para un mejor país</h1>
-                    <p>En Tareas Dirigidas ofrecemos acompañamiento personalizado para que tus hijos destaquen académicamente. ¡La educación es la clave del progreso nacional!</p>
-                    <a href="https://wa.me/584244517644?text=Hola,%20quiero%20reservar%20mi%20cupo" class="btn" target="_blank">Reserva tu cupo</a>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="imagen3.jpeg" alt="Estudiantes trabajando">
-                <div class="slider-content">
-                    <h1>Aprendizaje efectivo</h1>
-                    <p>Clases dinámicas con metodología probada para todos los niveles educativos.</p>
-                    <a href="https://wa.me/584244517644?text=Hola,%20quiero%20más%20info" class="btn" target="_blank">Contáctanos</a>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="imagen4.jpeg" alt="Actividades educativas">
-                <div class="slider-content">
-                    <h1>Tus metas, nuestro compromiso</h1>
-                    <p>Desde educación inicial hasta universitaria, logramos el éxito juntos.</p>
-                    <a href="#servicios" class="btn">Conoce nuestros servicios</a>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="imagen5.jpeg" alt="Clase en grupo">
-                <div class="slider-content">
-                    <h1>Resultados garantizados</h1>
-                    <p>Mejor rendimiento, confianza y hábitos de estudio sólidos.</p>
-                    <a href="#representantes" class="btn">Ver paquetes</a>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="imagen6.jpeg" alt="Materiales didácticos">
-                <div class="slider-content">
-                    <h1>Innovación educativa</h1>
-                    <p>Usamos tecnología y materiales reciclados para un aprendizaje único.</p>
-                    <a href="#galeria" class="btn">Ver evidencias</a>
-                </div>
-            </div>
-            <div class="slide">
-                <img src="imagen7.jpeg" alt="Estudiantes felices">
-                <div class="slider-content">
-                    <h1>¡Únete hoy!</h1>
-                    <p>Primer día de prueba gratis para evaluar la adaptación de tu hijo.</p>
-                    <a href="https://wa.me/584244517644?text=Hola,%20quiero%20clase%20de%20prueba" class="btn" target="_blank">Prueba gratis</a>
-                </div>
-            </div>
-        </div>
-        <button onclick="prevSlide()" style="position: absolute; top: 50%; left: 10px; background: rgba(0,0,0,0.5); color: white; border: none; padding: 1rem; cursor: pointer; border-radius: 50%;"><i class="fas fa-chevron-left"></i></button>
-        <button onclick="nextSlide()" style="position: absolute; top: 50%; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; padding: 1rem; cursor: pointer; border-radius: 50%;"><i class="fas fa-chevron-right"></i></button>
-    </section>
+    <section id="home" class="slider">
+        <div class="slides">
+            <div class="slide">
+                <img src="fachadalocal.jpg" alt="Fachada del local">
+                <div class="slider-content">
+                    <h1>Refuerza la educación para un mejor país</h1>
+                    <p>En Tareas Dirigidas ofrecemos acompañamiento personalizado para que tus hijos destaquen académicamente. ¡La educación es la clave del progreso nacional!</p>
+                    <a href="https://wa.me/584244517644?text=Hola,%20quiero%20reservar%20mi%20cupo" class="btn" target="_blank">Reserva tu cupo</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imagen3.jpeg" alt="Estudiantes trabajando">
+                <div class="slider-content">
+                    <h1>Aprendizaje efectivo</h1>
+                    <p>Clases dinámicas con metodología probada para todos los niveles educativos.</p>
+                    <a href="https://wa.me/584244517644?text=Hola,%20quiero%20más%20info" class="btn" target="_blank">Contáctanos</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imagen4.jpeg" alt="Actividades educativas">
+                <div class="slider-content">
+                    <h1>Tus metas, nuestro compromiso</h1>
+                    <p>Desde educación inicial hasta universitaria, logramos el éxito juntos.</p>
+                    <a href="#servicios" class="btn">Conoce nuestros servicios</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imagen5.jpeg" alt="Clase en grupo">
+                <div class="slider-content">
+                    <h1>Resultados garantizados</h1>
+                    <p>Mejor rendimiento, confianza y hábitos de estudio sólidos.</p>
+                    <a href="#representantes" class="btn">Ver paquetes</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imagen6.jpeg" alt="Materiales didácticos">
+                <div class="slider-content">
+                    <h1>Innovación educativa</h1>
+                    <p>Usamos tecnología y materiales reciclados para un aprendizaje único.</p>
+                    <a href="#galeria" class="btn">Ver evidencias</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imagen7.jpeg" alt="Estudiantes felices">
+                <div class="slider-content">
+                    <h1>¡Únete hoy!</h1>
+                    <p>Primer día de prueba gratis para evaluar la adaptación de tu hijo.</p>
+                    <a href="https://wa.me/584244517644?text=Hola,%20quiero%20clase%20de%20prueba" class="btn" target="_blank">Prueba gratis</a>
+                </div>
+            </div>
+        </div>
+        <button onclick="prevSlide()" style="position: absolute; top: 50%; left: 10px; background: rgba(0,0,0,0.5); color: white; border: none; padding: 1rem; cursor: pointer; border-radius: 50%;"><i class="fas fa-chevron-left"></i></button>
+        <button onclick="nextSlide()" style="position: absolute; top: 50%; right: 10px; background: rgba(0,0,0,0.5); color: white; border: none; padding: 1rem; cursor: pointer; border-radius: 50%;"><i class="fas fa-chevron-right"></i></button>
+    </section>
 
-    <section id="servicios">
-        <h2><i class="fas fa-graduation-cap"></i> Nuestros Servicios</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Materias Cubiertas</h3>
-                <p>Educación inicial, primaria, diversificada, liceo, refuerzos en inglés, matemáticas, escritura, oratoria y universitaria. Realizamos trabajos escolares, maquetas, folletos, trípticos, diapositivas y presentaciones para que seas el mejor de tu clase. Asesorías de tesis disponibles.</p>
-            </div>
-            <div class="service-card">
-                <h3>Metodología</h3>
-                <p>Acompañamiento paso a paso con refuerzo escolar y actividades prácticas. Utilizamos tablets, elementos manuales estratégicos y materiales de enseñanza diseñados con reciclaje para un aprendizaje integral y sostenible.</p>
-            </div>
-            <div class="service-card">
-                <h3>Horarios y Modalidades</h3>
-                <p>Presencial y virtual, grupos pequeños o individuales. Abierto de 8:00 a.m. a 7:00 p.m., 2 horas por día. Horarios flexibles en bloques de mañana (6am-12pm) o tarde (2pm-7pm).</p>
-            </div>
-            <div class="service-card">
-                <h3>Beneficios</h3>
-                <p>Mejor rendimiento escolar, mayor confianza y hábitos de estudio sólidos. La constancia es clave: no faltes a clases para mantener el hábito. Los representantes juegan un rol vital en el éxito.</p>
-            </div>
-        </div>
-    </section>
+    <section id="servicios">
+        <h2><i class="fas fa-graduation-cap"></i> Nuestros Servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Materias Cubiertas</h3>
+                <p>Educación inicial, primaria, diversificada, liceo, refuerzos en inglés, matemáticas, escritura, oratoria y universitaria. Realizamos trabajos escolares, maquetas, folletos, trípticos, diapositivas y presentaciones para que seas el mejor de tu clase. Asesorías de tesis disponibles.</p>
+            </div>
+            <div class="service-card">
+                <h3>Metodología</h3>
+                <p>Acompañamiento paso a paso con refuerzo escolar y actividades prácticas. Utilizamos tablets, elementos manuales estratégicos y materiales de enseñanza diseñados con reciclaje para un aprendizaje integral y sostenible.</p>
+            </div>
+            <div class="service-card">
+                <h3>Horarios y Modalidades</h3>
+                <p>Presencial y virtual, grupos pequeños o individuales. Abierto de 8:00 a.m. a 7:00 p.m., 2 horas por día. Horarios flexibles en bloques de mañana (6am-12pm) o tarde (2pm-7pm).</p>
+            </div>
+            <div class="service-card">
+                <h3>Beneficios</h3>
+                <p>Mejor rendimiento escolar, mayor confianza y hábitos de estudio sólidos. La constancia es clave: no faltes a clases para mantener el hábito. Los representantes juegan un rol vital en el éxito.</p>
+            </div>
+        </div>
+    </section>
 
-    <section id="representantes">
-        <h2><i class="fas fa-users"></i> Para Representantes</h2>
-        <div class="packages">
-            <div class="package">
-                <h3>Paquete Piaget</h3>
-                <p>5 días/semana, 2 horas/día</p>
-                <p>Horario a elegir: 6am-12pm o 2pm-7pm</p>
-                <p><strong>€5 tasa semanal</strong></p>
-            </div>
-            <div class="package">
-                <h3>Paquete Ausubel (Promocional)</h3>
-                <p>4 días/semana, 2 horas/día</p>
-                <p>Horario a elegir: 6am-12pm o 2pm-7pm</p>
-                <p><strong>€6 tasa semanal</strong></p>
-            </div>
-        </div>
-        <h3 style="text-align: center; margin: 3rem 0 1rem;">Testimonios</h3>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
-            <blockquote>"Mi hijo mejoró sus notas en matemáticas en solo un mes. ¡Excelente!"</blockquote>
-            <blockquote>"Atención personalizada y resultados visibles. Recomendado 100%."</blockquote>
-            <blockquote>"La maestra es increíble, mi niña ama ir a clases."</blockquote>
-        </div>
-        <div class="faq">
-            <h3 style="text-align: center; margin: 2rem 0;">Preguntas Frecuentes</h3>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>¿Qué pasa si mi hijo falta a clase?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Se pierde el hábito de estudio. Contacta por <a href="https://wa.me/584244517644?text=Qué%20pasa%20si%20mi%20hijo%20falta%20a%20clase" target="_blank">WhatsApp</a>.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>¿Cómo se manejan las evaluaciones?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    <p>Refuerzo personalizado post-evaluación. <a href="https://wa.me/584244517644?text=Cómo%20se%20manejan%20las%20evaluaciones" target="_blank">Pregunta por WhatsApp</a>.</p>
-                </div>
-            </div>
-        </div>
-        <div class="qr-code">
-            <h4>Pago Móvil</h4>
-            <p>0424-4525765 / Mercantil / 16897477</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pago%20Móvil:%200424-4525765%20Mercantil%2016897477" alt="QR Pago Móvil">
-            <p>También aceptamos Binance Pay</p>
-        </div>
-    </section>
+    <section id="representantes">
+        <h2><i class="fas fa-users"></i> Para Representantes</h2>
+        <div class="packages">
+            <div class="package">
+                <h3>Paquete Piaget</h3>
+                <p>5 días/semana, 2 horas/día</p>
+                <p>Horario a elegir: 6am-12pm o 2pm-7pm</p>
+                <p><strong>€5 tasa semanal</strong></p>
+            </div>
+            <div class="package">
+                <h3>Paquete Ausubel (Promocional)</h3>
+                <p>4 días/semana, 2 horas/día</p>
+                <p>Horario a elegir: 6am-12pm o 2pm-7pm</p>
+                <p><strong>€6 tasa semanal</strong></p>
+            </div>
+        </div>
+        <h3 style="text-align: center; margin: 3rem 0 1rem;">Testimonios</h3>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+            <blockquote>"Mi hijo mejoró sus notas en matemáticas en solo un mes. ¡Excelente!"</blockquote>
+            <blockquote>"Atención personalizada y resultados visibles. Recomendado 100%."</blockquote>
+            <blockquote>"La maestra es increíble, mi niña ama ir a clases."</blockquote>
+        </div>
+        <div class="faq">
+            <h3 style="text-align: center; margin: 2rem 0;">Preguntas Frecuentes</h3>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>¿Qué pasa si mi hijo falta a clase?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Se pierde el hábito de estudio. Contacta por <a href="https://wa.me/584244517644?text=Qué%20pasa%20si%20mi%20hijo%20falta%20a%20clase" target="_blank">WhatsApp</a>.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>¿Cómo se manejan las evaluaciones?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Refuerzo personalizado post-evaluación. <a href="https://wa.me/584244517644?text=Cómo%20se%20manejan%20las%20evaluaciones" target="_blank">Pregunta por WhatsApp</a>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="qr-code">
+            <h4>Pago Móvil</h4>
+            <p>0424-4525765 / Mercantil / 16897477</p>
+            <!-- QR generado externamente, placeholder -->
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pago%20Móvil:%200424-4525765%20Mercantil%2016897477" alt="QR Pago Móvil">
+            <p>También aceptamos Binance Pay</p>
+        </div>
+    </section>
 
-    <section id="clientes">
-        <h2><i class="fas fa-user-plus"></i> Para Nuevos Clientes</h2>
-        <ol style="max-width: 600px; margin: 0 auto 2rem;">
-            <li><strong>Contacto:</strong> Escríbenos por WhatsApp o formulario.</li>
-            <li><strong>Entrevista:</strong> Evaluamos necesidades y adaptamos plan.</li>
-            <li><strong>Inicio:</strong> Pago adelantado y clases comienzan. ¡Clase de prueba gratis!</li>
-        </ol>
-        <p style="text-align: center; font-size: 1.2rem;"><strong>Promoción: 1 día gratis para probar adaptación.</strong></p>
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="https://maps.app.goo.gl/Yco82LzVs3sJVcDS7" target="_blank" class="map-link" style="font-size: 2rem; color: var(--accent-color);">
-                <i class="fas fa-map-marker-alt"></i> Ver ubicación en Google Maps
-            </a>
-            <img src="mapa_de_Venezuela.png" alt="Ubicación en Valencia, Carabobo" style="max-width: 300px; margin-top: 1rem; display: block; margin: 1rem auto;">
-        </div>
-    </section>
+    <section id="clientes">
+        <h2><i class="fas fa-user-plus"></i> Para Nuevos Clientes</h2>
+        <ol style="max-width: 600px; margin: 0 auto 2rem;">
+            <li><strong>Contacto:</strong> Escríbenos por WhatsApp o formulario.</li>
+            <li><strong>Entrevista:</strong> Evaluamos necesidades y adaptamos plan.</li>
+            <li><strong>Inicio:</strong> Pago adelantado y clases comienzan. ¡Clase de prueba gratis!</li>
+        </ol>
+        <p style="text-align: center; font-size: 1.2rem;"><strong>Promoción: 1 día gratis para probar adaptación.</strong></p>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="https://maps.app.goo.gl/Yco82LzVs3sJVcDS7" target="_blank" class="map-link" style="font-size: 2rem; color: var(--accent-color);">
+                <i class="fas fa-map-marker-alt"></i> Ver ubicación en Google Maps
+            </a>
+            <img src="mapa_de_Venezuela.png" alt="Ubicación en Valencia, Carabobo" style="max-width: 300px; margin-top: 1rem; display: block; margin: 1rem auto;">
+        </div>
+    </section>
 
-    <section id="galeria" class="gallery-grid">
-        <h2><i class="fas fa-images"></i> Galería y Evidencias</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="fotomaestra.jpg" alt="Maestra" style="width: 100%; border-radius: 10px;">
-                <p>Nuestra maestra experta</p>
-            </div>
-            <div class="gallery-item">
-                <img src="imagen1.jpg" alt="Maestra con estudiante" style="width: 100%; border-radius: 10px;">
-                <p>Acompañamiento personalizado</p>
-            </div>
-            <div class="gallery-item">
-                <img src="imagen2.jpg" alt="Cuaderno con tareas" style="width: 100%; border-radius: 10px;">
-                <p>Trabajos de calidad</p>
-            </div>
-        </div>
-        <h3>Videos Educativos</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 2rem;">
-            <div class="video-container">
-                <video controls poster="fotomaestra.jpg">
-                    <source src="video1.mp4" type="video/mp4">
-                </video>
-                <p>Aprendiendo con "Mi Jardín"</p>
-            </div>
-            <div class="video-container">
-                <video controls>
-                    <source src="video2.mp4" type="video/mp4">
-                </video>
-                <p>Aprendiendo a leer 1° grado</p>
-            </div>
-            <div class="video-container">
-                <video controls>
-                    <source src="video3.mp4" type="video/mp4">
-                </video>
-                <p>Avanzando lectura 1° grado</p>
-            </div>
-            <div class="video-container">
-                <video controls>
-                    <source src="video4.mp4" type="video/mp4">
-                </video>
-                <p>Memorizando abecedario</p>
-            </div>
-            <div class="video-container">
-                <video controls>
-                    <source src="video5.mp4" type="video/mp4">
-                </video>
-                <p>Avances con Mi Jardín</p>
-            </div>
-        </div>
-    </section>
+    <section id="galeria" class="gallery-grid">
+        <h2><i class="fas fa-images"></i> Galería y Evidencias</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="fotomaestra.jpg" alt="Maestra" style="width: 100%; border-radius: 10px;">
+                <p>Nuestra maestra experta</p>
+            </div>
+            <div class="gallery-item">
+                <img src="imagen1.jpg" alt="Maestra con estudiante" style="width: 100%; border-radius: 10px;">
+                <p>Acompañamiento personalizado</p>
+            </div>
+            <div class="gallery-item">
+                <img src="imagen2.jpg" alt="Cuaderno con tareas" style="width: 100%; border-radius: 10px;">
+                <p>Trabajos de calidad</p>
+            </div>
+        </div>
+        <h3>Videos Educativos</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 2rem;">
+            <div class="video-container">
+                <video controls poster="fotomaestra.jpg">
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
+                <p>Aprendiendo con "Mi Jardín"</p>
+            </div>
+            <div class="video-container">
+                <video controls>
+                    <source src="video2.mp4" type="video/mp4">
+                </video>
+                <p>Aprendiendo a leer 1° grado</p>
+            </div>
+            <div class="video-container">
+                <video controls>
+                    <source src="video3.mp4" type="video/mp4">
+                </video>
+                <p>Avanzando lectura 1° grado</p>
+            </div>
+            <div class="video-container">
+                <video controls>
+                    <source src="video4.mp4" type="video/mp4">
+                </video>
+                <p>Memorizando abecedario</p>
+            </div>
+            <div class="video-container">
+                <video controls>
+                    <source src="video5.mp4" type="video/mp4">
+                </video>
+                <p>Avances con Mi Jardín</p>
+            </div>
+        </div>
+    </section>
 
-    <section id="recursos">
-        <h2><i class="fas fa-download"></i> Recursos Gratuitos</h2>
-        <div class="resources">
-            <div class="resource">
-                <a href="https://jhonmalorne.github.io/Abecedario/" target="_blank">Aprendiendo las Sílabas <i class="fas fa-book-open"></i></a>
-            </div>
-            <div class="resource">
-                <a href="cuadernillo-de-trazos-para-niños.pdf" download>Cuadernillo de trazos <i class="fas fa-download"></i></a>
-            </div>
-            <div class="resource">
-                <a href="ejercicios-de-restas-con-decimales.pdf" download>Ejercicios restas decimales <i class="fas fa-download"></i></a>
-            </div>
-        </div>
-    </section>
+    <section id="recursos">
+        <h2><i class="fas fa-download"></i> Recursos Gratuitos</h2>
+        <div class="resources">
+            <div class="resource">
+                <a href="cuadernillo-de-trazos-para-niños.pdf" download>Cuadernillo de trazos <i class="fas fa-download"></i></a>
+            </div>
+            <div class="resource">
+                <a href="ejercicios-de-restas-con-decimales.pdf" download>Ejercicios restas decimales <i class="fas fa-download"></i></a>
+            </div>
+        </div>
+    </section>
 
-    <section id="blog">
-        <h2><i class="fas fa-blog"></i> Blog Educativo</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <div style="background: var(--white); padding: 2rem; border-radius: 10px; box-shadow: var(--shadow);">
-                <h3>Tips para hábitos de estudio</h3>
-                <p>Establece rutinas diarias, elimina distracciones y celebra logros pequeños para motivar a los niños.</p>
-            </div>
-            <div style="background: var(--white); padding: 2rem; border-radius: 10px; box-shadow: var(--shadow);">
-                <h3>Consejos para padres</h3>
-                <p>Apoya sin presionar, comunica expectativas claras y colabora con los profesores para mejores resultados.</p>
-            </div>
-        </div>
-    </section>
+    <section id="blog">
+        <h2><i class="fas fa-blog"></i> Blog Educativo</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div style="background: var(--white); padding: 2rem; border-radius: 10px; box-shadow: var(--shadow);">
+                <h3>Tips para hábitos de estudio</h3>
+                <p>Establece rutinas diarias, elimina distracciones y celebra logros pequeños para motivar a los niños.</p>
+            </div>
+            <div style="background: var(--white); padding: 2rem; border-radius: 10px; box-shadow: var(--shadow);">
+                <h3>Consejos para padres</h3>
+                <p>Apoya sin presionar, comunica expectativas claras y colabora con los profesores para mejores resultados.</p>
+            </div>
+        </div>
+    </section>
 
-    <section id="contacto">
-        <h2><i class="fas fa-envelope"></i> Contacto</h2>
-        <form id="contactForm">
-            <input type="text" placeholder="Nombre" required>
-            <input type="email" placeholder="Correo electrónico" required>
-            <textarea placeholder="Mensaje" rows="5" required></textarea>
-            <button type="submit" class="btn" style="width: 100%; background: var(--secondary-color);">Enviar Mensaje</button>
-        </form>
-        <p style="text-align: center; margin-top: 2rem;">
-            Tel: <a href="tel:+584244517644">+58 424-4517644</a> | 
-            Email: <a href="mailto:mariannyt24@gmail.com">mariannyt24@gmail.com</a>
-        </p>
-    </section>
+    <section id="contacto">
+        <h2><i class="fas fa-envelope"></i> Contacto</h2>
+        <form id="contactForm">
+            <input type="text" placeholder="Nombre" required>
+            <input type="email" placeholder="Correo electrónico" required>
+            <textarea placeholder="Mensaje" rows="5" required></textarea>
+            <button type="submit" class="btn" style="width: 100%; background: var(--secondary-color);">Enviar Mensaje</button>
+        </form>
+        <p style="text-align: center; margin-top: 2rem;">
+            Tel: <a href="tel:+584244517644">+58 424-4517644</a> | 
+            Email: <a href="mailto:mariannyt24@gmail.com">mariannyt24@gmail.com</a>
+        </p>
+    </section>
 
-    <a href="https://wa.me/584244517644" class="btn-whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <a href="https://wa.me/584244517644" class="btn-whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-    <footer>
-        <p>© 2026 Tareas Dirigidas. Todos los derechos reservados. | Valencia, Carabobo, Venezuela</p>
-        <div class="credits">
-            Página web diseñada por <a href="https://jhonmalorne.github.io/nexus.net/" style="color: var(--yellow-accent);">Nexus Marketing</a>. ¡Contáctalos para tu sitio web!
-        </div>
-    </footer>
+    <footer>
+        <p>&copy; 2026 Tareas Dirigidas. Todos los derechos reservados. | Valencia, Carabobo, Venezuela</p>
+        <div class="credits">
+            Página web diseñada por <a href="https://jhonmalorne.github.io/nexus.net/" style="color: var(--yellow-accent);">Nexus Marketing</a>. ¡Contáctalos para tu sitio web!
+        </div>
+    </footer>
 
-    <script>
-        let slideIndex = 0;
-        const slides = document.querySelector('.slides');
-        const totalSlides = 6;
+    <script>
+        let slideIndex = 0;
+        const slides = document.querySelector('.slides');
+        const totalSlides = 6;
 
-        function nextSlide() {
-            slideIndex = (slideIndex + 1) % totalSlides;
-            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
-        }
+        function nextSlide() {
+            slideIndex = (slideIndex + 1) % totalSlides;
+            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
 
-        function prevSlide() {
-            slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
-            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
-        }
+        function prevSlide() {
+            slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
 
-        setInterval(nextSlide, 5000);
+        setInterval(nextSlide, 5000);
 
-        function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-        }
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
 
-        // Tasa Euro BCV
-        async function updateRate() {
-            try {
-                const response = await fetch('https://www.bcv.org.ve/seccionportal/tipo-de-cambio-oficial-del-bcv');
-                const html = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const eurElement = doc.querySelector('text[data-testid="euro-value"]') || Array.from(doc.querySelectorAll('strong')).find(el => el.textContent.includes('EUR') || el.textContent.match(/\d+,\d+/));
-                let rate = '384,33'; // fallback
-                if (eurElement) {
-                    rate = eurElement.textContent.trim().replace(/\s/g, '');
-                }
-                document.getElementById('rate').textContent = `€: ${rate} Bs (BCV)`;
-            } catch (e) {
-                document.getElementById('rate').textContent = '€: Consulta BCV';
-            }
-        }
-        updateRate();
-        setInterval(updateRate, 3600000); // hourly
+        // Tasa Euro BCV
+        async function updateRate() {
+            try {
+                const response = await fetch('https://www.bcv.org.ve/seccionportal/tipo-de-cambio-oficial-del-bcv');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const eurElement = doc.querySelector('text[data-testid="euro-value"]') || Array.from(doc.querySelectorAll('strong')).find(el => el.textContent.includes('EUR') || el.textContent.match(/\d+,\d+/));
+                let rate = '384,33'; // fallback [web:1][page:0]
+                if (eurElement) {
+                    rate = eurElement.textContent.trim().replace(/\s/g, '');
+                }
+                document.getElementById('rate').textContent = `€: ${rate} Bs (BCV)`;
+            } catch (e) {
+                document.getElementById('rate').textContent = '€: Consulta BCV [web:1]';
+            }
+        }
+        updateRate();
+        setInterval(updateRate, 3600000); // hourly
 
-        // Form submit
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Mensaje enviado! Te contactaremos pronto.');
-            this.reset();
-        });
+        // Form submit (simulado, usa EmailJS o backend para real)
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Mensaje enviado! Te contactaremos pronto.');
+            this.reset();
+        });
 
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
