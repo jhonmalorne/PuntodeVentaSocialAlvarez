@@ -419,7 +419,6 @@
         <div class="qr-code">
             <h4>Pago Móvil</h4>
             <p>0424-4525765 / Mercantil / 16897477</p>
-            <!-- QR generado externamente, placeholder -->
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pago%20Móvil:%200424-4525765%20Mercantil%2016897477" alt="QR Pago Móvil">
             <p>También aceptamos Binance Pay</p>
         </div>
@@ -496,6 +495,9 @@
         <h2><i class="fas fa-download"></i> Recursos Gratuitos</h2>
         <div class="resources">
             <div class="resource">
+                <a href="https://jhonmalorne.github.io/Abecedario/" target="_blank">Aprendiendo las Sílabas <i class="fas fa-book-open"></i></a>
+            </div>
+            <div class="resource">
                 <a href="cuadernillo-de-trazos-para-niños.pdf" download>Cuadernillo de trazos <i class="fas fa-download"></i></a>
             </div>
             <div class="resource">
@@ -537,7 +539,7 @@
     </a>
 
     <footer>
-        <p>&copy; 2026 Tareas Dirigidas. Todos los derechos reservados. | Valencia, Carabobo, Venezuela</p>
+        <p>© 2026 Tareas Dirigidas. Todos los derechos reservados. | Valencia, Carabobo, Venezuela</p>
         <div class="credits">
             Página web diseñada por <a href="https://jhonmalorne.github.io/nexus.net/" style="color: var(--yellow-accent);">Nexus Marketing</a>. ¡Contáctalos para tu sitio web!
         </div>
@@ -573,19 +575,19 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 const eurElement = doc.querySelector('text[data-testid="euro-value"]') || Array.from(doc.querySelectorAll('strong')).find(el => el.textContent.includes('EUR') || el.textContent.match(/\d+,\d+/));
-                let rate = '384,33'; // fallback [web:1][page:0]
+                let rate = '384,33'; // fallback
                 if (eurElement) {
                     rate = eurElement.textContent.trim().replace(/\s/g, '');
                 }
                 document.getElementById('rate').textContent = `€: ${rate} Bs (BCV)`;
             } catch (e) {
-                document.getElementById('rate').textContent = '€: Consulta BCV [web:1]';
+                document.getElementById('rate').textContent = '€: Consulta BCV';
             }
         }
         updateRate();
         setInterval(updateRate, 3600000); // hourly
 
-        // Form submit (simulado, usa EmailJS o backend para real)
+        // Form submit
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Mensaje enviado! Te contactaremos pronto.');
