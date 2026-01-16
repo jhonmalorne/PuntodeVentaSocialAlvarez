@@ -118,8 +118,8 @@
             transform: translateY(-3px);
         }
 
-        /* ===== TASA EURO ===== */
-        .euro-rate {
+        /* ===== TASA DOLAR ===== */
+        .dolar-rate {
             background-color: var(--primary-dark);
             color: white;
             text-align: center;
@@ -130,11 +130,11 @@
             z-index: 1001;
         }
 
-        .euro-rate span {
+        .dolar-rate span {
             margin-right: 5px;
         }
 
-        #euro-rate-value {
+        #dolar-rate-value {
             font-weight: bold;
             background-color: rgba(255, 255, 255, 0.2);
             padding: 2px 8px;
@@ -1314,10 +1314,10 @@
     </style>
 </head>
 <body>
-    <!-- Tasa Euro en tiempo real -->
-    <div class="euro-rate">
-        <span>Tasa Euro BCV: </span>
-        <span id="euro-rate-value">Cargando...</span>
+    <!-- Tasa Dolar en tiempo real -->
+    <div class="dolar-rate">
+        <span>Tasa Dolar BCV: </span>
+        <span id="dolar-rate-value">Cargando...</span>
     </div>
 
     <!-- Header con navegación -->
@@ -1497,7 +1497,7 @@
                     <div class="package-card">
                         <div class="package-header">
                             <h4>Paquete Piaget</h4>
-                            <div class="price">5 €<span>/semanal</span></div>
+                            <div class="price">5 $<span>/semanal</span></div>
                         </div>
                         <ul class="package-features">
                             <li><i class="fas fa-check-circle"></i> 5 días a la semana</li>
@@ -1512,7 +1512,7 @@
                         <div class="package-badge">Promoción</div>
                         <div class="package-header">
                             <h4>Paquete Ausubel</h4>
-                            <div class="price">6 €<span>/semanal</span></div>
+                            <div class="price">6 $<span>/semanal</span></div>
                         </div>
                         <ul class="package-features">
                             <li><i class="fas fa-check-circle"></i> 4 días a la semana</li>
@@ -2097,40 +2097,40 @@
                 });
             }
             
-            // ===== TASA DEL EURO EN TIEMPO REAL =====
-            async function fetchEuroRate() {
-                const euroRateElement = document.getElementById('euro-rate-value');
+            // ===== TASA DEL DOLAR EN TIEMPO REAL =====
+            async function fetchDolarRate() {
+                const dolarRateElement = document.getElementById('dolar-rate-value');
                 
-                if (!euroRateElement) return;
+                if (!dolarRateElement) return;
                 
                 try {
                     // Usar la API proporcionada
                     const response = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
                     const data = await response.json();
                     
-                    // La API devuelve datos en VES por USD, necesitamos calcular Euro
+                    // La API devuelve datos en VES por USD, necesitamos calcular Dolar
                     // Suponiendo una conversión aproximada USD/EUR
                     const usdToVes = data.promedio || data.venta;
                     const usdToEur = 0.92; // Tasa aproximada USD a EUR
-                    const euroToVes = usdToVes * usdToEur;
+                    const dolarToVes = usdToVes * usdToEur;
                     
-                    euroRateElement.textContent = `€1 = ${euroToVes.toFixed(2)} VES`;
-                    euroRateElement.style.fontWeight = 'bold';
+                    dolarRateElement.textContent = `$1 = ${dolarToVes.toFixed(2)} VES`;
+                    dolarRateElement.style.fontWeight = 'bold';
                     
                 } catch (error) {
-                    console.error('Error obteniendo tasa del euro:', error);
+                    console.error('Error obteniendo tasa del dolar:', error);
                     
                     // Tasa de respaldo
-                    euroRateElement.textContent = '€1 ≈ 45.50 VES (aprox)';
-                    euroRateElement.style.color = '#FF9800';
+                    dolarRateElement.textContent = '$1 ≈ 45.50 VES (aprox)';
+                    dolarRateElement.style.color = '#FF9800';
                 }
             }
             
-            // Llamar a la función para obtener la tasa del euro
-            fetchEuroRate();
+            // Llamar a la función para obtener la tasa del dolar
+            fetchDolarRate();
             
             // Actualizar tasa cada hora
-            setInterval(fetchEuroRate, 3600000);
+            setInterval(fetchDolarRate, 3600000);
             
             // ===== SUAVIZAR SCROLL PARA ENLACES INTERNOS =====
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2172,3 +2172,4 @@
     </script>
 </body>
 </html>
+
